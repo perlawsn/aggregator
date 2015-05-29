@@ -7,7 +7,7 @@
 	<attributes>
 		<attribute id="temp_c" type="float" permission="read-only"/>
 		<attribute id="period" type="integer" permission="write-only"/>
-		<attribute id="aggregator" type="integer" permission="read-only" />
+		
 	</attributes>
 
 	<channels>

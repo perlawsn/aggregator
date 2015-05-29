@@ -1,4 +1,4 @@
-package org.dei.perla.channel.aggregator.server;
+package org.dei.perla.aggregator.channel.server;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -51,9 +51,7 @@ public class AggregatorServerListener  {
 	executor.shutdown();
 	}
 	
-	public void startListener(){
-		this.startServer();
-	}
+
 }
 
  class PerlaClientHandler implements Runnable{

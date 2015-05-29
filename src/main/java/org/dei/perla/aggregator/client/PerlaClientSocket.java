@@ -66,7 +66,7 @@ public class PerlaClientSocket {
 
 public static void main(String[] args){
 
- PerlaClientSocket client = new PerlaClientSocket("127.0.0.1",1337);
+ PerlaClientSocket client = new PerlaClientSocket("127.0.0.1",1377);
 
  try {
 	 client.startClient();
