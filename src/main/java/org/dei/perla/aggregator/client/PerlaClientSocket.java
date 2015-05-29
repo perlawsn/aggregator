@@ -1,6 +1,8 @@
 package org.dei.perla.aggregator.client;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.NoSuchElementException;
@@ -29,7 +31,8 @@ public class PerlaClientSocket {
 		
 		Scanner socketIn=new Scanner(socket.getInputStream());
 		PrintWriter	socketOut=new PrintWriter(socket.getOutputStream());
-		
+		ObjectInputStream oin = new ObjectInputStream(socket.getInputStream());
+        ObjectOutputStream oout = new ObjectOutputStream(socket.getOutputStream());
 		Scanner stdin= new Scanner(System.in);
 		
 		try	{
