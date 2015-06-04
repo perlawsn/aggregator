@@ -31,8 +31,6 @@ public class PerlaClientSocket {
 		
 		Scanner socketIn=new Scanner(socket.getInputStream());
 		PrintWriter	socketOut=new PrintWriter(socket.getOutputStream());
-		ObjectInputStream oin = new ObjectInputStream(socket.getInputStream());
-        ObjectOutputStream oout = new ObjectOutputStream(socket.getOutputStream());
 		Scanner stdin= new Scanner(System.in);
 		
 		try	{

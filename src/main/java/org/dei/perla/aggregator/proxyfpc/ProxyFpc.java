@@ -3,6 +3,7 @@ package org.dei.perla.aggregator.proxyfpc;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import org.dei.perla.core.fpc.Fpc;
@@ -12,22 +13,41 @@ import org.dei.perla.core.sample.Attribute;
 
 public class ProxyFpc implements Fpc {
 
+	
+	private final int id;
+	private final int aggregatorId;
+    private final String type = "proxyFpc";
+	private final Set<Attribute> atts;
+    private final Map<Attribute, Object> attValues;
+	
+	
+	
+	protected ProxyFpc(int id, int aggregatorId, Set<Attribute> atts,
+            Map<Attribute, Object> attValues) {
+		this.id = id;
+		this.aggregatorId=aggregatorId;
+        this.atts = atts;
+        this.attValues = attValues;
+                		
+	}
+	
+	
 	@Override
 	public int getId() {
 		// TODO Auto-generated method stub
-		return 0;
+		return id;
 	}
 
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
-		return null;
+		return type;
 	}
 
 	@Override
 	public Collection<Attribute> getAttributes() {
 		// TODO Auto-generated method stub
-		return null;
+		return atts;
 	}
 
 	@Override
@@ -61,5 +81,12 @@ public class ProxyFpc implements Fpc {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	public int getAggregatorId() {
+		return aggregatorId;
+	}
+
+
 
 }
