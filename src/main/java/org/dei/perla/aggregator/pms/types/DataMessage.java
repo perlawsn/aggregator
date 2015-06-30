@@ -1,5 +1,7 @@
 package org.dei.perla.aggregator.pms.types;
 
-public class DataMessage {
+import java.io.Serializable;
+
+public class DataMessage implements Serializable{
 
 }

@@ -1,4 +1,4 @@
-package org.dei.perla.aggregator.pms.server;
+package org.dei.perla.aggregator.pms.node;
 
 import java.util.Random;
 public class ManageNode {
