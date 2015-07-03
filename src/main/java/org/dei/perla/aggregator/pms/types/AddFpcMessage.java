@@ -1,39 +1,36 @@
 package org.dei.perla.aggregator.pms.types;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
+
+import org.dei.perla.core.sample.Attribute;
 
 public class AddFpcMessage implements Serializable{
 	
 	String nodeId;
-	String FpcId;
-	HashMap<String, String> AttributeMap;
+	int fpcId;
+	HashMap<String, String> attributes;
 	
-	public AddFpcMessage(String FpcId){
+	public AddFpcMessage(String nodeId, int fpcId, HashMap <String, String> attributes){
 		this.nodeId=nodeId;
-		this.FpcId=FpcId;
-		
+		this.fpcId = fpcId;		
+		this.attributes = attributes;
 	}
-	
-	public void setNodeId(String nodeId){
-		this.nodeId=nodeId;
 		
-	}
-	
 	public String getNodeId() {
 		return nodeId;
 	}
 	
-	public String getFpcId() {
-		return FpcId;
+	public int getFpcId() {
+		return fpcId;
 	}
-		public HashMap<String, String> getAttributeMap() {
-		return AttributeMap;
+	
+	public HashMap<String, String> getAttributesMap(){
+		return attributes;
 	}
-	public void setAttributeMap(HashMap<String, String> attributeMap) {
-		
+   
 
-	}
 	
 	
 	
