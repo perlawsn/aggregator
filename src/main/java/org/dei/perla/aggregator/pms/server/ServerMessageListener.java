@@ -38,8 +38,14 @@ public class ServerMessageListener implements MessageListener{
 		      if (msg instanceof TextMessage) {
 		        System.out.println(((TextMessage) msg).getText());
 		      } else if (msg instanceof ObjectMessage) {
+		    	  
 	    	  	if (((ObjectMessage) msg).getObject() instanceof AddFpcMessage){
-    	  			AddFpcMessage message = (AddFpcMessage) ((ObjectMessage) msg).getObject();
+    	  			//Operazioni per creare un MirrorFpc
+	    	  		AddFpcMessage message = (AddFpcMessage) ((ObjectMessage) msg).getObject();
+	    	  		message.getAttributesMap();
+    	  			
+    	  			
+    	  			
 	    	  	}
 	    	  	if (((ObjectMessage) msg).getObject() instanceof DataMessage){
     	  			DataMessage message = (DataMessage) ((ObjectMessage) msg).getObject();

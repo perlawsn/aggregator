@@ -20,7 +20,7 @@ import org.objectweb.joram.client.jms.admin.AdminModule;
 import org.objectweb.joram.client.jms.admin.User;
 import org.objectweb.joram.client.jms.tcp.TcpConnectionFactory;
 
-public class NodeAdmin {
+public class AggregatorAdmin {
 	
     private String nodeId;
     private Properties p = new Properties();
@@ -75,21 +75,6 @@ public class NodeAdmin {
 	    nodeId=tempNodeId;
 	    return tempNodeId;	    
 }
-	public void sendFpcMessage(AddFpcMessage fpc) throws Exception{
-		
-		p.setProperty("java.naming.factory.initial", "fr.dyade.aaa.jndi2.client.NamingContextFactory");
-	    p.setProperty("java.naming.factory.host", "localhost");
-	    p.setProperty("java.naming.factory.port", "16400");
-	    javax.naming.Context jndiCtx = new InitialContext(p);
-	    Destination queue = (Queue) jndiCtx.lookup("serviceQueue");
-	    ConnectionFactory cf = (ConnectionFactory) jndiCtx.lookup("cf");
-	    jndiCtx.close();
-	    Connection cnx = cf.createConnection();
-	    Session sess = cnx.createSession(false, Session.AUTO_ACKNOWLEDGE);
-	    MessageProducer producer = sess.createProducer(queue);
-	    ObjectMessage omsg = sess.createObjectMessage(fpc);
-	    producer.send(omsg);
-	    cnx.close();
-	}
+
 	
 }

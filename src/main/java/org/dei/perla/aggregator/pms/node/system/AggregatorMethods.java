@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import org.dei.perla.core.sample.Attribute;
 
-public class NodeMethods {
+public class AggregatorMethods {
 	
 	HashMap<String, String> map;
 	

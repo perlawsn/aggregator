@@ -9,9 +9,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.dei.perla.aggregator.pms.node.NodeAdmin;
+import org.dei.perla.aggregator.pms.node.AggregatorAdmin;
+import org.dei.perla.aggregator.pms.node.ManageNode;
 import org.dei.perla.aggregator.pms.types.AddFpcMessage;
-import org.dei.perla.core.DeviceConnectionException;
 import org.dei.perla.core.PerLaSystem;
 import org.dei.perla.core.Plugin;
 import org.dei.perla.core.channel.ChannelFactory;
@@ -24,6 +24,7 @@ import org.dei.perla.core.descriptor.DeviceDescriptor;
 import org.dei.perla.core.descriptor.DeviceDescriptorParser;
 import org.dei.perla.core.descriptor.JaxbDeviceDescriptorParser;
 import org.dei.perla.core.fpc.Fpc;
+import org.dei.perla.core.fpc.FpcCreationException;
 import org.dei.perla.core.fpc.FpcFactory;
 import org.dei.perla.core.fpc.base.BaseFpcFactory;
 import org.dei.perla.core.message.MapperFactory;
@@ -32,10 +33,11 @@ import org.dei.perla.core.registry.TreeRegistry;
 public class AggregatorSystem {
 	private static final Logger log = Logger.getLogger(PerLaSystem.class);
 	
-	private NodeAdmin nodeAdmin = new NodeAdmin();
-	private NodeMethods nodeMethods = new NodeMethods();
+	private AggregatorAdmin nodeAdmin = new AggregatorAdmin();
+	private AggregatorMethods nodeMethods = new AggregatorMethods();
+	private ManageNode manageNode = new ManageNode();
 	private final String nodeId;
-	
+		
 	private final FpcFactory factory;
 	private final DeviceDescriptorParser parser;
 	private final TreeRegistry registry;
@@ -83,27 +85,43 @@ public class AggregatorSystem {
 	}
 	
 	
-	   public Fpc injectDescriptor(InputStream is)
-	            throws DeviceConnectionException {
+	 
+	   public Fpc injectDescriptor(InputStream is) throws FpcCreationException {
+	        int id = -1;
+	        boolean idGenerated = false;
+
 	        try {
+
 	            DeviceDescriptor d = parser.parse(is);
-	            Fpc fpc = factory.createFpc(d, registry);
+
+	            if (d.getId() != null) {
+	                id = d.getId();
+	            } else {
+	                id = registry.generateID();
+	                idGenerated = true;
+	            }
+
+	            Fpc fpc = factory.createFpc(d, id);
 	            registry.add(fpc);
-	            
 	            //Notifica della creazione dell'Fpc al server superiore
 	            HashMap<String, String> map = nodeMethods.generateListAttributes(fpc.getAttributes());
 	            AddFpcMessage addFpcOnServer = new AddFpcMessage(nodeId, fpc.getId(), map );
-	            nodeAdmin.sendFpcMessage(addFpcOnServer);
-	                        
+	            manageNode.sendFpcMessage(addFpcOnServer);
 	            return fpc;
-	        } catch (Exception e) {
-	            throw new DeviceConnectionException("Error injecting Device " +
-	                    "Descriptor", e);
+
+	        } catch(Exception e) {
+	            if (idGenerated) {
+	                registry.releaseID(id);
+	            }
+	            String msg = "Error creating Fpc '" + id + "'";
+	            log.error(msg, e);
+	            throw new FpcCreationException(msg, e);
 	        }
 	    }
+
 	
 	
-	 private final class FactoryHandler implements IOHandler {
+	   private final class FactoryHandler implements IOHandler {
 
 	        @Override
 	        public void complete(IORequest request, Optional<Payload> result) {
@@ -113,11 +131,9 @@ public class AggregatorSystem {
 
 	        private void addFpc(InputStream is) {
 	            try {
-	                DeviceDescriptor d = parser.parse(is);
-	                Fpc fpc = factory.createFpc(d, registry);
-	                registry.add(fpc);
-	            } catch (Exception e) {
-	                log.error("Cannot create Fpc", e);
+	                injectDescriptor(is);
+	            } catch (FpcCreationException e) {
+	                log.error(e);
 	            }
 	        }
 
