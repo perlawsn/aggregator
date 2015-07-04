@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.dei.perla.aggregator.pms.node.AggregatorAdmin;
+import org.dei.perla.aggregator.pms.node.AggregatorConsumer;
 import org.dei.perla.aggregator.pms.node.ManageNode;
 import org.dei.perla.aggregator.pms.types.AddFpcMessage;
 import org.dei.perla.core.PerLaSystem;
@@ -36,6 +37,7 @@ public class AggregatorSystem {
 	private AggregatorAdmin nodeAdmin = new AggregatorAdmin();
 	private AggregatorMethods nodeMethods = new AggregatorMethods();
 	private ManageNode manageNode = new ManageNode();
+	private AggregatorConsumer aggrConsumer;
 	private final String nodeId;
 		
 	private final FpcFactory factory;
@@ -47,6 +49,10 @@ public class AggregatorSystem {
 		 	//Initialize the connection with a server and receives a node ID
 			
 			nodeId = nodeAdmin.createNodeContext();
+			//Lancio un consumer che attende query dal server
+            aggrConsumer = new AggregatorConsumer (this);
+            new Thread(aggrConsumer).start();
+			
 			
 			registry = new TreeRegistry();
 		 
@@ -103,10 +109,13 @@ public class AggregatorSystem {
 
 	            Fpc fpc = factory.createFpc(d, id);
 	            registry.add(fpc);
+	            
 	            //Notifica della creazione dell'Fpc al server superiore
 	            HashMap<String, String> map = nodeMethods.generateListAttributes(fpc.getAttributes());
 	            AddFpcMessage addFpcOnServer = new AddFpcMessage(nodeId, fpc.getId(), map );
 	            manageNode.sendFpcMessage(addFpcOnServer);
+	            
+	            
 	            return fpc;
 
 	        } catch(Exception e) {
@@ -117,7 +126,10 @@ public class AggregatorSystem {
 	            log.error(msg, e);
 	            throw new FpcCreationException(msg, e);
 	        }
-	    }
+	    
+	    
+            
+	   }
 
 	
 	

@@ -44,7 +44,5 @@ public class ManageNode {
 		    cnx.close();
 		}
 		
-		public void launchAggregatorConsumer(){
-			
-		}
+		
 }
