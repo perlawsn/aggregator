@@ -7,9 +7,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.dei.perla.aggregator.pms.node.AggregatorAdmin;
 import org.dei.perla.aggregator.pms.node.AggregatorConsumer;
+import org.dei.perla.aggregator.pms.node.AggregatorMessageProducer;
 import org.dei.perla.aggregator.pms.node.ManageNode;
 import org.dei.perla.aggregator.pms.types.AddFpcMessage;
 import org.dei.perla.core.PerLaSystem;
@@ -36,6 +38,7 @@ public class AggregatorSystem {
 	private AggregatorAdmin nodeAdmin = new AggregatorAdmin();
 	private AggregatorMethods nodeMethods = new AggregatorMethods();
 	private ManageNode manageNode = new ManageNode();
+	private AggregatorMessageProducer aggrProducer = new AggregatorMessageProducer();
 	private AggregatorConsumer aggrConsumer;
 	private final String nodeId;
 		
@@ -112,9 +115,8 @@ public class AggregatorSystem {
 	            //Notifica della creazione dell'Fpc al server superiore
 	            HashMap<String, String> map = nodeMethods.generateListAttributes(fpc.getAttributes());
 	            AddFpcMessage addFpcOnServer = new AddFpcMessage(nodeId, fpc.getId(), map );
-	            manageNode.sendFpcMessage(addFpcOnServer);
-	            
-	            
+	            aggrProducer.sendFpcMessage(addFpcOnServer);
+	            	            
 	            return fpc;
 
 	        } catch(Exception e) {
