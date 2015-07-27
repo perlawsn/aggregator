@@ -102,11 +102,12 @@ import org.dei.perla.core.PerLaSystem;
 			    
 			    	  		if (((ObjectMessage) msg).getObject() instanceof AddFpcMessage){
 			    	  		AddFpcMessage message = (AddFpcMessage) ((ObjectMessage) msg).getObject();
-			    	  		//Inizia lo smistamento delle query	
+			    	  		//Attiva l'aggiunta dell'fpc 
+			    	  		message.getNodeId();
 			    	  		}
 			    	  		if (((ObjectMessage) msg).getObject() instanceof DataMessage){
 				    	  		DataMessage message = (DataMessage) ((ObjectMessage) msg).getObject();
-				    	  		//Inizia lo smistamento delle query	
+				    	  		//riceve dati	
 				    	  		}
 				    	  		
 			    	

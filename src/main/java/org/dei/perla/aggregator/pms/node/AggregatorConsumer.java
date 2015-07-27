@@ -3,7 +3,6 @@ package org.dei.perla.aggregator.pms.node;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
-
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
@@ -16,19 +15,17 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-
-import org.dei.perla.aggregator.pms.node.system.AggregatorSystem;
 import org.dei.perla.aggregator.pms.types.QueryMessage;
 
 public class AggregatorConsumer implements Runnable {
 
-	private AggregatorSystem aggSystem = null;
+	private String nodeId;
 	private  javax.naming.Context ictx = null;
 	Destination dest = null;
 	ConnectionFactory cf = null;
-	public AggregatorConsumer (AggregatorSystem aggSystem) {
+	public AggregatorConsumer (String nodeId) {
 		
-		this.aggSystem = aggSystem;
+		this.nodeId=nodeId;
 		
 	}
 	
