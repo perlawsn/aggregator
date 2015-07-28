@@ -2,18 +2,9 @@ package org.dei.perla.aggregator.pms.node;
 
 import java.net.ConnectException;
 import java.util.Properties;
-
-import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
-import javax.jms.Destination;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
 import javax.jms.QueueConnectionFactory;
-import javax.jms.Session;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
-
-import org.dei.perla.aggregator.pms.types.AddFpcMessage;
 import org.objectweb.joram.client.jms.Queue;
 import org.objectweb.joram.client.jms.admin.AdminException;
 import org.objectweb.joram.client.jms.admin.AdminModule;
@@ -54,7 +45,7 @@ public class AggregatorAdmin {
 	    tempNodeId = ManageNode.generateId();
 	    Queue queue;
 		try {
-			queue = Queue.create("queue"+ tempNodeId);
+			queue = Queue.create("AggrQueue"+ tempNodeId);
 			queue.setFreeReading();
 			queue.setFreeWriting();
 			jndiCtx.bind("queue"+tempNodeId, queue);
