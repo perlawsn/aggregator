@@ -1,4 +1,4 @@
-package org.dei.perla.aggregator.pms.node.system;
+package org.dei.perla.aggregator.pms.node;
 
 import java.util.Collection;
 import java.util.HashMap;

@@ -17,7 +17,7 @@ import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-	import org.dei.perla.aggregator.pms.node.system.AggregatorSystem;
+import org.dei.perla.aggregator.pms.node.AggregatorSystem;
 import org.dei.perla.aggregator.pms.types.AddFpcMessage;
 import org.dei.perla.aggregator.pms.types.DataMessage;
 import org.dei.perla.aggregator.pms.types.QueryMessage;
