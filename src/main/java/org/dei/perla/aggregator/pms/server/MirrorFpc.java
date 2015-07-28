@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
+import org.dei.perla.aggregator.pms.types.RequestMessage;
 import org.dei.perla.core.fpc.Fpc;
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
@@ -19,7 +20,7 @@ public class MirrorFpc implements Fpc {
 	  	private final int id;
 	    private final String type;
 	    private final Set<Attribute> atts;
-	
+	    ServerMessageProducer servMsgProd = new ServerMessageProducer();
 
 	    protected MirrorFpc(int id, String type, Set<Attribute> atts, String nodeId) {
 	        this.id = id;
@@ -53,21 +54,41 @@ public class MirrorFpc implements Fpc {
 		@Override
 		public Task get(List<Attribute> atts, boolean strict,
 				TaskHandler handler) {
-			// TODO Auto-generated method stub
+			
+			RequestMessage reqMess = new RequestMessage(atts, strict, false, -1, nodeId);
+			try {
+				servMsgProd.sendGetMessage(reqMess);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return null;
 		}
 
 		@Override
 		public Task get(List<Attribute> atts, boolean strict, long periodMs,
 				TaskHandler handler) {
-			// TODO Auto-generated method stub
+			
+			RequestMessage reqMess = new RequestMessage(atts, strict, false, periodMs, nodeId);
+			try {
+				servMsgProd.sendGetMessage(reqMess);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return null;
 		}
 
 		@Override
 		public Task async(List<Attribute> atts, boolean strict,
 				TaskHandler handler) {
-			// TODO Auto-generated method stub
+			RequestMessage reqMess = new RequestMessage(atts, strict, true, -1, nodeId);
+			try {
+				servMsgProd.sendGetMessage(reqMess);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}					
 			return null;
 		}
 
