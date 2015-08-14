@@ -33,7 +33,7 @@ public class AggregatorSystem {
 	
 	private AggregatorAdmin nodeAdmin = new AggregatorAdmin();
 	private AggregatorMethods nodeMethods = new AggregatorMethods();
-	private ManageNode manageNode = new ManageNode();
+	
 	private AggregatorMessageProducer aggrProducer = new AggregatorMessageProducer();
 	private AggregatorConsumer aggrConsumer;
 	private final String nodeId;

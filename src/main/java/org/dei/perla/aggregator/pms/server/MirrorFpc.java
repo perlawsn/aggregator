@@ -20,7 +20,7 @@ public class MirrorFpc implements Fpc {
 	  	private final int id;
 	    private final String type;
 	    private final Set<Attribute> atts;
-	    ServerMessageProducer servMsgProd = new ServerMessageProducer();
+	    private ServerMessageProducer servMsgProd = new ServerMessageProducer();
 
 	    protected MirrorFpc(int id, String type, Set<Attribute> atts, String nodeId) {
 	        this.id = id;
@@ -50,10 +50,16 @@ public class MirrorFpc implements Fpc {
 			// TODO Auto-generated method stub
 			return null;
 		}
+		
+		/*In ogni metodo get va definito l'handler che riceverà i messaggi
+		 *lo "smistatore" dei messaggi che arrivano avrà quindi un registro
+		 *con dentro gli handler 
+		 */
 
 		@Override
 		public Task get(List<Attribute> atts, boolean strict,
 				TaskHandler handler) {
+						
 			
 			RequestMessage reqMess = new RequestMessage(atts, strict, false, -1, nodeId);
 			try {
@@ -69,6 +75,8 @@ public class MirrorFpc implements Fpc {
 		public Task get(List<Attribute> atts, boolean strict, long periodMs,
 				TaskHandler handler) {
 			
+			
+			
 			RequestMessage reqMess = new RequestMessage(atts, strict, false, periodMs, nodeId);
 			try {
 				servMsgProd.sendGetMessage(reqMess);
@@ -76,6 +84,8 @@ public class MirrorFpc implements Fpc {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			
 			return null;
 		}
 

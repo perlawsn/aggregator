@@ -14,6 +14,7 @@ import org.objectweb.joram.client.jms.tcp.TcpConnectionFactory;
 public class AggregatorAdmin {
 	
     private String nodeId;
+    private AggregatorMethods aggrMet;
     private Properties p = new Properties();
     private javax.naming.Context jndiCtx;
 	public String createNodeContext() {
@@ -42,7 +43,7 @@ public class AggregatorAdmin {
 	    boolean connected=false;
 	    String tempNodeId =null;
 	    while (!connected){
-	    tempNodeId = ManageNode.generateId();
+	    tempNodeId = aggrMet.generateId();
 	    Queue queue;
 		try {
 			queue = Queue.create("AggrQueue"+ tempNodeId);
