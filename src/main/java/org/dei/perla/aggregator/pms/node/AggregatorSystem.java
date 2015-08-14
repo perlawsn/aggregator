@@ -33,8 +33,6 @@ public class AggregatorSystem {
 	
 	private AggregatorAdmin nodeAdmin = new AggregatorAdmin();
 	private AggregatorMethods nodeMethods = new AggregatorMethods();
-	
-	private AggregatorMessageProducer aggrProducer = new AggregatorMessageProducer();
 	private AggregatorConsumer aggrConsumer;
 	private final String nodeId;
 		
@@ -111,7 +109,7 @@ public class AggregatorSystem {
 	            //Notifica della creazione dell'Fpc al server superiore
 	            HashMap<String, String> map = nodeMethods.generateListAttributes(fpc.getAttributes());
 	            AddFpcMessage addFpcOnServer = new AddFpcMessage(nodeId, fpc.getId(), map );
-	            aggrProducer.sendFpcMessage(addFpcOnServer);
+	            nodeMethods.sendFpcMessage(addFpcOnServer);
 	            	            
 	            return fpc;
 
