@@ -14,7 +14,7 @@ import org.dei.perla.aggregator.pms.types.RequestMessage;
 import org.objectweb.joram.client.jms.Queue;
 
 
-public class ServerMessageProducer {
+public class ServerMethods {
 	
 	public void sendGetMessage(RequestMessage reqMsg) throws Exception{
 		Properties p = new Properties();
