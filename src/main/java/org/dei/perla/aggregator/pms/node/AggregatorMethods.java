@@ -42,6 +42,7 @@ public class AggregatorMethods {
         return sb.toString();
     }
 
+    //Invio dati per la creazione di un FPC su server
     public void sendFpcMessage(AddFpcMessage fpc) throws Exception{
 		Properties p = new Properties();
 		p.setProperty("java.naming.factory.initial", "fr.dyade.aaa.jndi2.client.NamingContextFactory");
@@ -58,5 +59,6 @@ public class AggregatorMethods {
 	    producer.send(omsg);
 	    cnx.close();
 	}
+    
 	
 }

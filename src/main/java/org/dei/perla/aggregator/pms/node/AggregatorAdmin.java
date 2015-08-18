@@ -30,7 +30,7 @@ public class AggregatorAdmin {
 	    
 	    QueueConnectionFactory qcf = TcpConnectionFactory.create("localhost", 16010);
 	    p.setProperty("java.naming.factory.initial", "fr.dyade.aaa.jndi2.client.NamingContextFactory");
-	    p.setProperty("java.naming.factory.host", "localhost");
+	    p.setProperty("java.naming.factory.host", "localhost"); //Remote host
 	    p.setProperty("java.naming.factory.port", "16400");
 	    
 		try {
@@ -65,7 +65,7 @@ public class AggregatorAdmin {
 	    connected = true;
 	    }
 	    nodeId=tempNodeId;
-	    return tempNodeId;	    
+	    return nodeId;	    
 }
 
 	

@@ -94,9 +94,10 @@ public class MsgListener implements MessageListener {
 		        System.out.println(((TextMessage) msg).getText());
 		      } else if (msg instanceof ObjectMessage) {
 		    
-		    	  		if (((ObjectMessage) msg).getObject() instanceof QueryMessage){
-		    	  		QueryMessage message = (QueryMessage) ((ObjectMessage) msg).getObject();
-		    	  		//Inizia lo smistamento delle query	
+		      		if (((ObjectMessage) msg).getObject() instanceof QueryMessage){
+		      		QueryMessage message = (QueryMessage) ((ObjectMessage) msg).getObject();
+		      		//Inizia lo smistamento delle query
+		      		
 		    	  		}
 		    	
 		      }

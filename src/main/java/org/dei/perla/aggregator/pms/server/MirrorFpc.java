@@ -56,6 +56,7 @@ public class MirrorFpc implements Fpc {
 		public Task get(List<Attribute> atts, boolean strict,
 				TaskHandler handler) {
 						
+			MirrorTask mirTask = new MirrorTask(atts, handler);
 			
 			RequestMessage reqMess = new RequestMessage(atts, strict, false, -1, nodeId);
 			try {
@@ -64,7 +65,10 @@ public class MirrorFpc implements Fpc {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return null;
+			
+			
+			
+			return mirTask;
 		}
 
 		@Override
