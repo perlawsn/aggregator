@@ -14,7 +14,7 @@ public class MirrorTask implements Task{
 	
 	private final List<Attribute> atts;
 	private final MirrorTaskHandler handler;
-	
+	private final int fpcId;
 	private ServerMethods servMsgProd = new ServerMethods();
 	private boolean hasStarted = false;
     private boolean running = false;
@@ -23,11 +23,13 @@ public class MirrorTask implements Task{
     static Random rnd = new Random(System.currentTimeMillis());
     static private final int LENGHT = 4;
 	
-	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, long periodMs, String nodeId){
+	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, 
+			long periodMs, String nodeId, int fpcId){
 		this.atts=atts;
 		this.handler=(MirrorTaskHandler) handler;
+		this.fpcId=fpcId;
 		subscribeQueue();
-		GetMessage reqMess = new GetMessage(atts, strict, false, periodMs, nodeId);
+		GetMessage reqMess = new GetMessage(atts, strict, false, periodMs, nodeId, fpcId);
 		try {
 			servMsgProd.sendGetMessage(reqMess);
 		} catch (Exception e) {
@@ -38,11 +40,13 @@ public class MirrorTask implements Task{
 		
 	}
 	
-	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, String nodeId){
+	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, 
+			String nodeId, int fpcId){
 		this.atts=atts;
 		this.handler=(MirrorTaskHandler) handler;
+		this.fpcId=fpcId;
 		subscribeQueue();
-		GetMessage reqMess = new GetMessage(atts, strict, false, -1, nodeId);
+		GetMessage reqMess = new GetMessage(atts, strict, false, -1, nodeId, fpcId);
 		try {
 			servMsgProd.sendGetMessage(reqMess);
 		} catch (Exception e) {
@@ -53,11 +57,12 @@ public class MirrorTask implements Task{
 	}
 	
 	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, 
-			boolean async, String nodeId){
+			boolean async, String nodeId, int fpcId ){
 		this.atts=atts;
 		this.handler=(MirrorTaskHandler) handler;
+		this.fpcId=fpcId;
 		subscribeQueue();
-		GetMessage reqMess = new GetMessage(atts, strict, async, -1, nodeId);
+		GetMessage reqMess = new GetMessage(atts, strict, async, -1, nodeId, fpcId);
 		try {
 			servMsgProd.sendGetMessage(reqMess);
 		} catch (Exception e) {

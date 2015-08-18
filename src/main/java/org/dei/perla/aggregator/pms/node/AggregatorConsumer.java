@@ -3,6 +3,7 @@ package org.dei.perla.aggregator.pms.node;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
+
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
@@ -15,17 +16,23 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import org.dei.perla.aggregator.pms.types.GetMessage;
 import org.dei.perla.aggregator.pms.types.QueryMessage;
+import org.dei.perla.core.registry.TreeRegistry;
 
 public class AggregatorConsumer implements Runnable {
-
+	
+	private TreeRegistry registry;
 	private String nodeId;
 	private  javax.naming.Context ictx = null;
 	Destination dest = null;
 	ConnectionFactory cf = null;
-	public AggregatorConsumer (String nodeId) {
+	
+	public AggregatorConsumer (String nodeId, TreeRegistry registry) {
 		
 		this.nodeId=nodeId;
+		this.registry=registry;
 		
 	}
 	
@@ -95,10 +102,17 @@ public class MsgListener implements MessageListener {
 		      } else if (msg instanceof ObjectMessage) {
 		    
 		      		if (((ObjectMessage) msg).getObject() instanceof QueryMessage){
-		      		QueryMessage message = (QueryMessage) ((ObjectMessage) msg).getObject();
-		      		//Inizia lo smistamento delle query
+		      		
+		      			QueryMessage message = (QueryMessage) ((ObjectMessage) msg).getObject();
+		      			//Inizia lo smistamento delle query
 		      		
 		    	  		}
+		      		
+		      		if (((ObjectMessage) msg).getObject() instanceof GetMessage){
+		      			//Riceve il messaggio diretto all'Fpc contrassegnato da un id
+		      			GetMessage message = (GetMessage) ((ObjectMessage) msg).getObject();
+		      			sendToFpc(message);
+		      		}
 		    	
 		      }
 		      else {
@@ -109,6 +123,20 @@ public class MsgListener implements MessageListener {
 		    }
 		  }
 }
+
+	public void sendToFpc(GetMessage message){
+		
+		if (message.isAsync()){
+			registry.get(message.getFpcId()).async(message.getAttributes(),message.isStrict(), null);
+		}
+		if (message.getPeriodMs()!=-1){
+			registry.get(message.getFpcId()).get(message.getAttributes(), message.isStrict(), message.getPeriodMs(), null);			
+		}
+		if (message.getPeriodMs()==-1){
+			registry.get(message.getFpcId()).get(message.getAttributes(), message.isStrict(), null);
+		}
+		
+	}
 
 
 

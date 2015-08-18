@@ -3,8 +3,7 @@ package org.dei.perla.aggregator.pms.server;
 	import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
-
-	import javax.jms.Connection;
+import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -102,12 +101,14 @@ import org.dei.perla.core.PerLaSystem;
 			    
 			    	  		if (((ObjectMessage) msg).getObject() instanceof AddFpcMessage){
 			    	  		AddFpcMessage message = (AddFpcMessage) ((ObjectMessage) msg).getObject();
-			    	  		//Attiva l'aggiunta dell'fpc 
+			    	  		//Attiva l'aggiunta dell'fpc
+			    	  		//da implementare
 			    	  		message.getNodeId();
+			    	  		
 			    	  		}
 			    	  		if (((ObjectMessage) msg).getObject() instanceof DataMessage){
-				    	  		DataMessage message = (DataMessage) ((ObjectMessage) msg).getObject();
-				    	  		//riceve dati	
+				    	  	DataMessage message = (DataMessage) ((ObjectMessage) msg).getObject();
+				    	  	//Questo if è probabilmente totalmente inutile	
 				    	  		}
 				    	  		
 			    	

@@ -43,14 +43,14 @@ public class AggregatorSystem {
 	
 	public AggregatorSystem(List<Plugin> plugins) throws Exception{
 		 	//Initialize the connection with a server and receives a node ID
-			
+			registry = new TreeRegistry();
 			nodeId = nodeAdmin.createNodeContext();
 			//Lancio un consumer che attende query dal server
-            aggrConsumer = new AggregatorConsumer (nodeId);
+            aggrConsumer = new AggregatorConsumer (nodeId, registry);
             
             new Thread(aggrConsumer).start();
 						
-			registry = new TreeRegistry();
+			
 		 
 		    // Initialize default Device Descriptor packages
 	        Set<String> pkgs = new HashSet<>();
@@ -103,7 +103,7 @@ public class AggregatorSystem {
 	                idGenerated = true;
 	            }
 
-	            Fpc fpc = factory.createFpc(d, id);
+	            AggregatorFpc fpc = (AggregatorFpc) factory.createFpc(d, id);
 	            registry.add(fpc);
 	            
 	            //Notifica della creazione dell'Fpc al server superiore

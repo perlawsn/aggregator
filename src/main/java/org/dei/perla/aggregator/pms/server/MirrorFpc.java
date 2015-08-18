@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
-import org.dei.perla.aggregator.pms.types.GetMessage;
 import org.dei.perla.core.fpc.Fpc;
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
@@ -16,9 +15,8 @@ public class MirrorFpc implements Fpc {
 	  	private final int id;
 	    private final String type;
 	    private final Set<Attribute> atts;
-	    private ServerMethods servMsgProd = new ServerMethods();
-
-	    protected MirrorFpc(int id, String type, Set<Attribute> atts, String nodeId) {
+	    
+	    protected MirrorFpc(int id, String nodeId, String type, Set<Attribute> atts) {
 	        this.id = id;
 	        this.type = type;
 	        this.atts = atts;
@@ -47,16 +45,11 @@ public class MirrorFpc implements Fpc {
 			return null;
 		}
 		
-		/*In ogni metodo get va definito l'handler che riceverà i messaggi
-		 *lo "smistatore" dei messaggi che arrivano avrà quindi un registro
-		 *con dentro gli handler 
-		 */
-
 		@Override
 		public Task get(List<Attribute> atts, boolean strict,
 				TaskHandler handler) {
 						
-			MirrorTask mirTask = new MirrorTask(atts, handler, strict, nodeId);
+			MirrorTask mirTask = new MirrorTask(atts, handler, strict, nodeId, id);
 			
 			mirTask.start();
 						
@@ -67,7 +60,7 @@ public class MirrorFpc implements Fpc {
 		public Task get(List<Attribute> atts, boolean strict, long periodMs,
 				TaskHandler handler) {
 			
-			MirrorTask mirTask = new MirrorTask(atts, handler, strict, periodMs, nodeId);
+			MirrorTask mirTask = new MirrorTask(atts, handler, strict, periodMs, nodeId, id);
 			
 			mirTask.start();
 			
@@ -78,7 +71,7 @@ public class MirrorFpc implements Fpc {
 		public Task async(List<Attribute> atts, boolean strict,
 				TaskHandler handler) {
 			
-			MirrorTask mirTask = new MirrorTask(atts, handler, strict, true, nodeId);
+			MirrorTask mirTask = new MirrorTask(atts, handler, strict, true, nodeId, id);
 			
 			mirTask.start();
 			

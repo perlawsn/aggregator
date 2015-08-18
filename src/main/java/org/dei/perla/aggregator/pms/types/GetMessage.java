@@ -14,16 +14,38 @@ public class GetMessage implements Serializable{
 	private List<Attribute> attributes;
 	private long periodMs;
 	
-	public GetMessage(List<Attribute> attributes, boolean strict, boolean async, long periodMs, String nodeId){
+	public GetMessage(List<Attribute> attributes, boolean strict, boolean async, 
+			long periodMs, String nodeId, int fpcId){
 		this.attributes = attributes;
 		this.strict = strict;
 		this.async = async;
 		this.periodMs = periodMs;
 		this.nodeId = nodeId;
+		this.fpcId=fpcId;
 		
 	}
 
 	public String getNodeId(){
 		return nodeId;
+	}
+
+	public int getFpcId() {
+		return fpcId;
+	}
+
+	public boolean isAsync() {
+		return async;
+	}
+
+	public boolean isStrict() {
+		return strict;
+	}
+
+	public List<Attribute> getAttributes() {
+		return attributes;
+	}
+
+	public long getPeriodMs() {
+		return periodMs;
 	}
 }
