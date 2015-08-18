@@ -47,9 +47,9 @@ public class AggregatorSystem {
 			nodeId = nodeAdmin.createNodeContext();
 			//Lancio un consumer che attende query dal server
             aggrConsumer = new AggregatorConsumer (nodeId);
+            
             new Thread(aggrConsumer).start();
-			
-			
+						
 			registry = new TreeRegistry();
 		 
 		    // Initialize default Device Descriptor packages

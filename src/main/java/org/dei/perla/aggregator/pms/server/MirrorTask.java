@@ -3,6 +3,7 @@ package org.dei.perla.aggregator.pms.server;
 import java.util.List;
 import java.util.Random;
 
+import org.dei.perla.aggregator.pms.types.GetMessage;
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
 import org.dei.perla.core.sample.Attribute;
@@ -13,6 +14,8 @@ public class MirrorTask implements Task{
 	
 	private final List<Attribute> atts;
 	private final MirrorTaskHandler handler;
+	
+	private ServerMethods servMsgProd = new ServerMethods();
 	private boolean hasStarted = false;
     private boolean running = false;
     private SamplePipeline pipeline;
@@ -20,10 +23,48 @@ public class MirrorTask implements Task{
     static Random rnd = new Random(System.currentTimeMillis());
     static private final int LENGHT = 4;
 	
-	public MirrorTask(List <Attribute> atts, TaskHandler handler){
+	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, long periodMs, String nodeId){
 		this.atts=atts;
 		this.handler=(MirrorTaskHandler) handler;
+		subscribeQueue();
+		GetMessage reqMess = new GetMessage(atts, strict, false, periodMs, nodeId);
+		try {
+			servMsgProd.sendGetMessage(reqMess);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		startConsumer();
 		
+	}
+	
+	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, String nodeId){
+		this.atts=atts;
+		this.handler=(MirrorTaskHandler) handler;
+		subscribeQueue();
+		GetMessage reqMess = new GetMessage(atts, strict, false, -1, nodeId);
+		try {
+			servMsgProd.sendGetMessage(reqMess);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		startConsumer();				
+	}
+	
+	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, 
+			boolean async, String nodeId){
+		this.atts=atts;
+		this.handler=(MirrorTaskHandler) handler;
+		subscribeQueue();
+		GetMessage reqMess = new GetMessage(atts, strict, async, -1, nodeId);
+		try {
+			servMsgProd.sendGetMessage(reqMess);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		startConsumer();
 	}
 	
 	  protected final synchronized void processSample(Object[] sample) {
@@ -71,7 +112,7 @@ public class MirrorTask implements Task{
         
     }
 	
-	public static String generateId() {
+	private static String generateId() {
         StringBuilder sb = new StringBuilder(LENGHT);
         for (int i = 0; i < LENGHT; i++) {
             sb.append(ALPHABET.charAt(rnd.nextInt(ALPHABET.length())));
@@ -80,6 +121,13 @@ public class MirrorTask implements Task{
     }
 	
 	public void subscribeQueue(){
+		
+	}
+	
+	public void startConsumer(){
+		Object[] obj=null;
+		processSample(obj);
+		
 	}
 	
 }

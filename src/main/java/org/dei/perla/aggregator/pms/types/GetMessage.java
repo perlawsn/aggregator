@@ -5,7 +5,7 @@ import java.util.List;
 import org.dei.perla.core.sample.Attribute;
 
 
-public class RequestMessage implements Serializable{
+public class GetMessage implements Serializable{
 	
 	private String nodeId;
 	private int fpcId;
@@ -14,7 +14,7 @@ public class RequestMessage implements Serializable{
 	private List<Attribute> attributes;
 	private long periodMs;
 	
-	public RequestMessage(List<Attribute> attributes, boolean strict, boolean async, long periodMs, String nodeId){
+	public GetMessage(List<Attribute> attributes, boolean strict, boolean async, long periodMs, String nodeId){
 		this.attributes = attributes;
 		this.strict = strict;
 		this.async = async;

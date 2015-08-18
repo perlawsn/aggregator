@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
-import org.dei.perla.aggregator.pms.types.RequestMessage;
+import org.dei.perla.aggregator.pms.types.GetMessage;
 import org.dei.perla.core.fpc.Fpc;
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
@@ -56,48 +56,35 @@ public class MirrorFpc implements Fpc {
 		public Task get(List<Attribute> atts, boolean strict,
 				TaskHandler handler) {
 						
-			MirrorTask mirTask = new MirrorTask(atts, handler);
+			MirrorTask mirTask = new MirrorTask(atts, handler, strict, nodeId);
 			
-			RequestMessage reqMess = new RequestMessage(atts, strict, false, -1, nodeId);
-			try {
-				servMsgProd.sendGetMessage(reqMess);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-			
+			mirTask.start();
+						
 			return mirTask;
 		}
 
 		@Override
 		public Task get(List<Attribute> atts, boolean strict, long periodMs,
 				TaskHandler handler) {
-						
-			RequestMessage reqMess = new RequestMessage(atts, strict, false, periodMs, nodeId);
-			try {
-				servMsgProd.sendGetMessage(reqMess);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			
+			MirrorTask mirTask = new MirrorTask(atts, handler, strict, periodMs, nodeId);
 			
-			return null;
+			mirTask.start();
+			
+			return mirTask;
 		}
 
 		@Override
 		public Task async(List<Attribute> atts, boolean strict,
 				TaskHandler handler) {
-			RequestMessage reqMess = new RequestMessage(atts, strict, true, -1, nodeId);
-			try {
-				servMsgProd.sendGetMessage(reqMess);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}					
-			return null;
+			
+			MirrorTask mirTask = new MirrorTask(atts, handler, strict, true, nodeId);
+			
+			mirTask.start();
+			
+			return mirTask;
+								
+			
 		}
 
 		@Override

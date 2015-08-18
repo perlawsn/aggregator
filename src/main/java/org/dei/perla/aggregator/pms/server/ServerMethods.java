@@ -10,13 +10,13 @@ import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.naming.InitialContext;
 
-import org.dei.perla.aggregator.pms.types.RequestMessage;
+import org.dei.perla.aggregator.pms.types.GetMessage;
 import org.objectweb.joram.client.jms.Queue;
 
 
 public class ServerMethods {
 	
-	public void sendGetMessage(RequestMessage reqMsg) throws Exception{
+	public void sendGetMessage(GetMessage reqMsg) throws Exception{
 		Properties p = new Properties();
 		p.setProperty("java.naming.factory.initial", "fr.dyade.aaa.jndi2.client.NamingContextFactory");
 	    p.setProperty("java.naming.factory.host", "localhost");
