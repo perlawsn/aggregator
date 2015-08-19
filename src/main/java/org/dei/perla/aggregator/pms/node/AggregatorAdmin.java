@@ -50,8 +50,7 @@ public class AggregatorAdmin {
 			queue.setFreeReading();
 			queue.setFreeWriting();
 			jndiCtx.bind("queue"+tempNodeId, queue);
-			jndiCtx.bind("cf"+tempNodeId, cf);
-			jndiCtx.bind("qcf"+tempNodeId, qcf);
+			
 		    jndiCtx.close();
 		} catch (ConnectException | AdminException e) {
 			// TODO Auto-generated catch block
