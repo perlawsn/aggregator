@@ -1,9 +1,11 @@
 package org.dei.perla.aggregator.pms.server;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+
 import org.dei.perla.core.fpc.Fpc;
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
@@ -14,9 +16,9 @@ public class MirrorFpc implements Fpc {
 		private final String nodeId;
 	  	private final int id;
 	    private final String type;
-	    private final Set<Attribute> atts;
+	    private final Collection<Attribute> atts;
 	    
-	    protected MirrorFpc(int id, String nodeId, String type, Set<Attribute> atts) {
+	    protected MirrorFpc(int id, String nodeId, String type, Collection<Attribute> atts) {
 	        this.id = id;
 	        this.type = type;
 	        this.atts = atts;
@@ -34,7 +36,7 @@ public class MirrorFpc implements Fpc {
 	    }
 
 	    @Override
-	    public Set<Attribute> getAttributes() {
+	    public Collection<Attribute> getAttributes() {
 	        return atts;
 	    }
 

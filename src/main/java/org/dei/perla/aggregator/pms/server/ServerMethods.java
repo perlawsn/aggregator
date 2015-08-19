@@ -11,6 +11,7 @@ import javax.jms.Session;
 import javax.naming.InitialContext;
 
 import org.dei.perla.aggregator.pms.types.GetMessage;
+import org.dei.perla.aggregator.pms.types.QueryMessage;
 import org.objectweb.joram.client.jms.Queue;
 
 
@@ -33,6 +34,9 @@ public class ServerMethods {
 	    cnx.close();
 	}
 
+	public void sendQueryMessage(QueryMessage reqMsg) throws Exception{
+		
+	}
 	
 	
 }

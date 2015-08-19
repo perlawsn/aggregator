@@ -3,6 +3,7 @@ package org.dei.perla.aggregator.pms.server;
 	import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
+
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
@@ -21,17 +22,21 @@ import org.dei.perla.aggregator.pms.types.AddFpcMessage;
 import org.dei.perla.aggregator.pms.types.DataMessage;
 import org.dei.perla.aggregator.pms.types.QueryMessage;
 import org.dei.perla.core.PerLaSystem;
+import org.dei.perla.core.registry.DuplicateDeviceIDException;
+import org.dei.perla.core.registry.Registry;
+import org.dei.perla.core.registry.TreeRegistry;
 
 	public class ServerConsumer  implements Runnable {
-
-		private PerLaSystem aggSystem = null;
+		
 		private  javax.naming.Context ictx = null;
-		Destination dest = null;
-		ConnectionFactory cf = null;
-		public ServerConsumer (PerLaSystem aggSystem) {
+		private Destination dest = null;
+		private ConnectionFactory cf = null;
+		private TreeRegistry registry;
+		
+		public ServerConsumer (TreeRegistry registry) {
 			
-			this.aggSystem = aggSystem;
-			
+			this.registry=registry;
+						
 		}
 		
 		@Override
@@ -102,8 +107,18 @@ import org.dei.perla.core.PerLaSystem;
 			    	  		if (((ObjectMessage) msg).getObject() instanceof AddFpcMessage){
 			    	  		AddFpcMessage message = (AddFpcMessage) ((ObjectMessage) msg).getObject();
 			    	  		//Attiva l'aggiunta dell'fpc
-			    	  		//da implementare
-			    	  		message.getNodeId();
+			    	  		
+			    	  		
+			    	  		
+			    	  		MirrorFpc newFpc = new MirrorFpc (message.getFpcId(), message.getNodeId(),
+			    	  		"mirror", message.getAttributesMap());
+			    	  		
+			    	  		try {
+								registry.add(newFpc);
+							} catch (DuplicateDeviceIDException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 			    	  		
 			    	  		}
 			    	  		if (((ObjectMessage) msg).getObject() instanceof DataMessage){

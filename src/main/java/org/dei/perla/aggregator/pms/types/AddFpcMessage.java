@@ -8,11 +8,11 @@ import org.dei.perla.core.sample.Attribute;
 
 public class AddFpcMessage implements Serializable{
 	
-	String nodeId;
-	int fpcId;
-	HashMap<String, String> attributes;
+	private String nodeId;
+	private int fpcId;
+	private Collection<Attribute> attributes;
 	
-	public AddFpcMessage(String nodeId, int fpcId, HashMap <String, String> attributes){
+	public AddFpcMessage(String nodeId, int fpcId, Collection<Attribute> attributes){
 		this.nodeId=nodeId;
 		this.fpcId = fpcId;		
 		this.attributes = attributes;
@@ -26,7 +26,7 @@ public class AddFpcMessage implements Serializable{
 		return fpcId;
 	}
 	
-	public HashMap<String, String> getAttributesMap(){
+	public Collection<Attribute> getAttributesMap(){
 		return attributes;
 	}
    

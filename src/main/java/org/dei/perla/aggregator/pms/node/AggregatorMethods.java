@@ -14,7 +14,9 @@ import javax.jms.Session;
 import javax.naming.InitialContext;
 
 import org.dei.perla.aggregator.pms.types.AddFpcMessage;
+import org.dei.perla.aggregator.pms.types.DataMessage;
 import org.dei.perla.core.sample.Attribute;
+import org.dei.perla.core.sample.Sample;
 import org.objectweb.joram.client.jms.Queue;
 
 public class AggregatorMethods {
@@ -56,6 +58,23 @@ public class AggregatorMethods {
 	    Session sess = cnx.createSession(false, Session.AUTO_ACKNOWLEDGE);
 	    MessageProducer producer = sess.createProducer(queue);
 	    ObjectMessage omsg = sess.createObjectMessage(fpc);
+	    producer.send(omsg);
+	    cnx.close();
+	}
+    
+    public void sendDataMessage(DataMessage message, String dataQueue) throws Exception{
+		Properties p = new Properties();
+		p.setProperty("java.naming.factory.initial", "fr.dyade.aaa.jndi2.client.NamingContextFactory");
+	    p.setProperty("java.naming.factory.host", "localhost");
+	    p.setProperty("java.naming.factory.port", "16400");
+	    javax.naming.Context jndiCtx = new InitialContext(p);
+	    Destination queue = (Queue) jndiCtx.lookup("dataQueue");
+	    ConnectionFactory cf = (ConnectionFactory) jndiCtx.lookup("cf");
+	    jndiCtx.close();
+	    Connection cnx = cf.createConnection();
+	    Session sess = cnx.createSession(false, Session.AUTO_ACKNOWLEDGE);
+	    MessageProducer producer = sess.createProducer(queue);
+	    ObjectMessage omsg = sess.createObjectMessage(message);
 	    producer.send(omsg);
 	    cnx.close();
 	}

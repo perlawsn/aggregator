@@ -107,8 +107,8 @@ public class AggregatorSystem {
 	            registry.add(fpc);
 	            
 	            //Notifica della creazione dell'Fpc al server superiore
-	            HashMap<String, String> map = nodeMethods.generateListAttributes(fpc.getAttributes());
-	            AddFpcMessage addFpcOnServer = new AddFpcMessage(nodeId, fpc.getId(), map );
+	            
+	            AddFpcMessage addFpcOnServer = new AddFpcMessage(nodeId, fpc.getId(), fpc.getAttributes() );
 	            nodeMethods.sendFpcMessage(addFpcOnServer);
 	            	            
 	            return fpc;

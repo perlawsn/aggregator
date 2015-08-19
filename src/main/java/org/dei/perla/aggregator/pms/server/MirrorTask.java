@@ -15,21 +15,27 @@ public class MirrorTask implements Task{
 	private final List<Attribute> atts;
 	private final MirrorTaskHandler handler;
 	private final int fpcId;
+	private final String nodeId;
+	private final String queue;
 	private ServerMethods servMsgProd = new ServerMethods();
 	private boolean hasStarted = false;
     private boolean running = false;
     private SamplePipeline pipeline;
-    static final String ALPHABET = "0123456789abcdefghijklmnopqrstuvwzxy";
-    static Random rnd = new Random(System.currentTimeMillis());
-    static private final int LENGHT = 4;
-	
+    
+    
 	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, 
 			long periodMs, String nodeId, int fpcId){
+		
+		
 		this.atts=atts;
 		this.handler=(MirrorTaskHandler) handler;
 		this.fpcId=fpcId;
+		this.nodeId=nodeId;
+		
+		queue = generateQueue();
+		
 		subscribeQueue();
-		GetMessage reqMess = new GetMessage(atts, strict, false, periodMs, nodeId, fpcId);
+		GetMessage reqMess = new GetMessage(atts, strict, false, periodMs, nodeId, this.fpcId);
 		try {
 			servMsgProd.sendGetMessage(reqMess);
 		} catch (Exception e) {
@@ -42,11 +48,16 @@ public class MirrorTask implements Task{
 	
 	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, 
 			String nodeId, int fpcId){
+		
 		this.atts=atts;
 		this.handler=(MirrorTaskHandler) handler;
 		this.fpcId=fpcId;
+		this.nodeId=nodeId;
+		
+		queue = generateQueue();
+		
 		subscribeQueue();
-		GetMessage reqMess = new GetMessage(atts, strict, false, -1, nodeId, fpcId);
+		GetMessage reqMess = new GetMessage(atts, strict, false, -1, nodeId, this.fpcId);
 		try {
 			servMsgProd.sendGetMessage(reqMess);
 		} catch (Exception e) {
@@ -58,11 +69,16 @@ public class MirrorTask implements Task{
 	
 	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, 
 			boolean async, String nodeId, int fpcId ){
+		
 		this.atts=atts;
 		this.handler=(MirrorTaskHandler) handler;
 		this.fpcId=fpcId;
+		this.nodeId=nodeId;
+		
+		queue = generateQueue();
+		
 		subscribeQueue();
-		GetMessage reqMess = new GetMessage(atts, strict, async, -1, nodeId, fpcId);
+		GetMessage reqMess = new GetMessage(atts, strict, async, -1, nodeId, this.fpcId);
 		try {
 			servMsgProd.sendGetMessage(reqMess);
 		} catch (Exception e) {
@@ -72,7 +88,8 @@ public class MirrorTask implements Task{
 		startConsumer();
 	}
 	
-	  protected final synchronized void processSample(Object[] sample) {
+	
+	protected final synchronized void processSample(Object[] sample) {
 	        if (!running) {
 	            return;
 	        }
@@ -109,20 +126,22 @@ public class MirrorTask implements Task{
         running = true;
         hasStarted = true;
         
-        //Iscrive le code sul server 
+        //Iscrive la coda sul server 
         subscribeQueue();
         
         //Lancia un Consumer
         //il Consumer ogni volta che arrivano i dati lancia handler.data(this, dati);
         
+        startConsumer();
+        
     }
 	
-	private static String generateId() {
-        StringBuilder sb = new StringBuilder(LENGHT);
-        for (int i = 0; i < LENGHT; i++) {
-            sb.append(ALPHABET.charAt(rnd.nextInt(ALPHABET.length())));
-        }
-        return sb.toString();
+	private String generateQueue() {
+		//To do 
+		String fpcString = ((Integer)fpcId).toString();
+		String queue = "queue" + nodeId + fpcString;
+		return queue;
+		
     }
 	
 	public void subscribeQueue(){
@@ -130,8 +149,8 @@ public class MirrorTask implements Task{
 	}
 	
 	public void startConsumer(){
-		Object[] obj=null;
-		processSample(obj);
+		//To do 
+		handler.data(this, null);
 		
 	}
 	

@@ -127,13 +127,16 @@ public class MsgListener implements MessageListener {
 	public void sendToFpc(GetMessage message){
 		
 		if (message.isAsync()){
-			registry.get(message.getFpcId()).async(message.getAttributes(),message.isStrict(), null);
+			registry.get(message.getFpcId())
+			.async(message.getAttributes(),message.isStrict(), null);
 		}
 		if (message.getPeriodMs()!=-1){
-			registry.get(message.getFpcId()).get(message.getAttributes(), message.isStrict(), message.getPeriodMs(), null);			
+			registry.get(message.getFpcId())
+			.get(message.getAttributes(), message.isStrict(), message.getPeriodMs(), null);			
 		}
 		if (message.getPeriodMs()==-1){
-			registry.get(message.getFpcId()).get(message.getAttributes(), message.isStrict(), null);
+			registry.get(message.getFpcId())
+			.get(message.getAttributes(), message.isStrict(), null);
 		}
 		
 	}
