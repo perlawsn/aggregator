@@ -42,7 +42,8 @@ public class AggregatorSystem {
 	private final FactoryHandler fctHand = new FactoryHandler();
 	
 	public AggregatorSystem(List<Plugin> plugins) throws Exception{
-		 	//Initialize the connection with a server and receives a node ID
+		 	
+		//Initialize the connection with a server and receives a node ID
 			registry = new TreeRegistry();
 			nodeId = nodeAdmin.createNodeContext();
 			//Lancio un consumer che attende query dal server

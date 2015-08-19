@@ -62,7 +62,7 @@ public class AggregatorMethods {
 	    cnx.close();
 	}
     
-    public void sendDataMessage(DataMessage message, String dataQueue) throws Exception{
+    public void sendDataMessage(DataMessage message) throws Exception{
 		Properties p = new Properties();
 		p.setProperty("java.naming.factory.initial", "fr.dyade.aaa.jndi2.client.NamingContextFactory");
 	    p.setProperty("java.naming.factory.host", "localhost");

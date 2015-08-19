@@ -6,7 +6,7 @@ import org.dei.perla.core.fpc.TaskHandler;
 import org.dei.perla.core.sample.Sample;
 
 public class AggregatorTaskHandler implements TaskHandler {
-
+	AggregatorMethods aggrMet;
 	@Override
 	public void complete(Task task) {
 		// TODO Auto-generated method stub
@@ -18,6 +18,12 @@ public class AggregatorTaskHandler implements TaskHandler {
 		//qui scatta l'invio
 		
 		DataMessage dataMessage = new DataMessage(sample);
+		try {
+			aggrMet.sendDataMessage(dataMessage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

@@ -13,10 +13,10 @@ import org.objectweb.joram.client.jms.tcp.TcpConnectionFactory;
 
 public class AggregatorAdmin {
 	
-    private String nodeId;
     private AggregatorMethods aggrMet;
     private Properties p = new Properties();
     private javax.naming.Context jndiCtx;
+    
 	public String createNodeContext() {
 		
 		ConnectionFactory cf = TcpConnectionFactory.create("localhost", 16010);
@@ -63,8 +63,8 @@ public class AggregatorAdmin {
 	    System.out.println("Admin closed.");
 	    connected = true;
 	    }
-	    nodeId=tempNodeId;
-	    return nodeId;	    
+	    
+	    return tempNodeId;    
 }
 
 	

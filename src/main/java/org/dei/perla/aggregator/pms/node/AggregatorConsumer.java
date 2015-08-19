@@ -47,7 +47,7 @@ public class AggregatorConsumer implements Runnable {
 		try {
 			ictx = new InitialContext(p);
 			
-			dest = (Destination) ictx.lookup("queue");
+			dest = (Destination) ictx.lookup("queue"+nodeId);
 			cf = (ConnectionFactory) ictx.lookup("cf");
 			    ictx.close();
 		} catch (NamingException e) {
