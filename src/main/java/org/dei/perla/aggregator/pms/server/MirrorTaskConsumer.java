@@ -1,4 +1,4 @@
-package org.dei.perla.aggregator.pms.node;
+package org.dei.perla.aggregator.pms.server;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -17,24 +17,23 @@ import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.dei.perla.aggregator.pms.node.AggregatorConsumer.MsgListener;
+import org.dei.perla.aggregator.pms.types.DataMessage;
 import org.dei.perla.aggregator.pms.types.GetMessage;
 import org.dei.perla.aggregator.pms.types.QueryMessage;
-import org.dei.perla.core.registry.TreeRegistry;
 
-public class AggregatorConsumer implements Runnable {
+public class MirrorTaskConsumer implements Runnable {
 	
-	private TreeRegistry registry;
-	private String nodeId;
+	
 	private  javax.naming.Context ictx = null;
 	private Destination dest = null;
 	private ConnectionFactory cf = null;
-	
-	public AggregatorConsumer (String nodeId, TreeRegistry registry) {
-		
-		this.nodeId=nodeId;
-		this.registry=registry;
-		
+	private MirrorTask task;
+
+	public MirrorTaskConsumer (MirrorTask task){
+		this.task=task;
 	}
+	
 	
 	@Override
 	public void run() {
@@ -47,7 +46,7 @@ public class AggregatorConsumer implements Runnable {
 		try {
 			ictx = new InitialContext(p);
 			
-			dest = (Destination) ictx.lookup("queue"+nodeId);
+			dest = (Destination) ictx.lookup(task.getQueue());
 			cf = (ConnectionFactory) ictx.lookup("cf");
 			    ictx.close();
 		} catch (NamingException e) {
@@ -101,18 +100,16 @@ public class MsgListener implements MessageListener {
 		        System.out.println(((TextMessage) msg).getText());
 		      } else if (msg instanceof ObjectMessage) {
 		    
-		      		if (((ObjectMessage) msg).getObject() instanceof QueryMessage){
+		      		if (((ObjectMessage) msg).getObject() instanceof DataMessage){
 		      		
-		      			QueryMessage message = (QueryMessage) ((ObjectMessage) msg).getObject();
-		      			//Inizia lo smistamento delle query
+		      			DataMessage message = (DataMessage) ((ObjectMessage) msg).getObject();
+		      			
+		      			task.getHandler().data(task, message.getSample());
+		      			
 		      		
 		    	  		}
+		      				      			
 		      		
-		      		if (((ObjectMessage) msg).getObject() instanceof GetMessage){
-		      			//Riceve il messaggio diretto all'Fpc contrassegnato da un id
-		      			GetMessage message = (GetMessage) ((ObjectMessage) msg).getObject();
-		      			sendToFpc(message);
-		      		}
 		    	
 		      }
 		      else {
@@ -123,28 +120,6 @@ public class MsgListener implements MessageListener {
 		    }
 		  }
 }
-
-	public void sendToFpc(GetMessage message){
-		
-		AggregatorTaskHandler aggrTaskHandler= new AggregatorTaskHandler(message.getQueue());
-		
-		if (message.isAsync()){
-			registry.get(message.getFpcId())
-			.async(message.getAttributes(),message.isStrict(), aggrTaskHandler);
-		}
-		if (message.getPeriodMs()!=-1){
-			registry.get(message.getFpcId())
-			.get(message.getAttributes(), message.isStrict(), message.getPeriodMs(), aggrTaskHandler);			
-		}
-		if (message.getPeriodMs()==-1){
-			registry.get(message.getFpcId())
-			.get(message.getAttributes(), message.isStrict(), aggrTaskHandler);
-		}
-		
-	}
-
-
-
-}
 	
-
+	
+}
