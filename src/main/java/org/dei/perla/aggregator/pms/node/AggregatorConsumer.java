@@ -126,17 +126,19 @@ public class MsgListener implements MessageListener {
 
 	public void sendToFpc(GetMessage message){
 		
+		AggregatorTaskHandler aggrTaskHandler= new AggregatorTaskHandler(message.getQueue());
+		
 		if (message.isAsync()){
 			registry.get(message.getFpcId())
-			.async(message.getAttributes(),message.isStrict(), null);
+			.async(message.getAttributes(),message.isStrict(), aggrTaskHandler);
 		}
 		if (message.getPeriodMs()!=-1){
 			registry.get(message.getFpcId())
-			.get(message.getAttributes(), message.isStrict(), message.getPeriodMs(), null);			
+			.get(message.getAttributes(), message.isStrict(), message.getPeriodMs(), aggrTaskHandler);			
 		}
 		if (message.getPeriodMs()==-1){
 			registry.get(message.getFpcId())
-			.get(message.getAttributes(), message.isStrict(), null);
+			.get(message.getAttributes(), message.isStrict(), aggrTaskHandler);
 		}
 		
 	}

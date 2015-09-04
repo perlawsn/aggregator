@@ -13,15 +13,17 @@ public class GetMessage implements Serializable{
 	private boolean strict;
 	private List<Attribute> attributes;
 	private long periodMs;
+	private String queue;
 	
 	public GetMessage(List<Attribute> attributes, boolean strict, boolean async, 
-			long periodMs, String nodeId, int fpcId){
+			long periodMs, String nodeId, String queue, int fpcId){
 		this.attributes = attributes;
 		this.strict = strict;
 		this.async = async;
 		this.periodMs = periodMs;
 		this.nodeId = nodeId;
 		this.fpcId=fpcId;
+		this.queue=queue;
 		
 	}
 
@@ -47,5 +49,9 @@ public class GetMessage implements Serializable{
 
 	public long getPeriodMs() {
 		return periodMs;
+	}
+	
+	public String getQueue(){
+		return this.queue;
 	}
 }

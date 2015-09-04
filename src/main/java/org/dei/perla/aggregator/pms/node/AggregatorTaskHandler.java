@@ -7,6 +7,13 @@ import org.dei.perla.core.sample.Sample;
 
 public class AggregatorTaskHandler implements TaskHandler {
 	AggregatorMethods aggrMet;
+	
+	String queue ;
+	
+	public AggregatorTaskHandler(String queue){
+		this.queue=queue;
+	}
+	
 	@Override
 	public void complete(Task task) {
 		// TODO Auto-generated method stub

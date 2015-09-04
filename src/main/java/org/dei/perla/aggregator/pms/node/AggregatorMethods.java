@@ -24,7 +24,17 @@ public class AggregatorMethods {
 	HashMap<String, String> map;
 	static final String ALPHABET = "0123456789abcdefghijklmnopqrstuvwzxy";
     static Random rnd = new Random(System.currentTimeMillis());
-    static private final int LENGHT = 4;
+    static final int LENGHT = 4;
+    private String dataQueue;
+    
+    public AggregatorMethods(String dataQueue){
+    	this.dataQueue=dataQueue;
+    	
+    }
+    
+    public AggregatorMethods(){
+    	
+    }
     
     public HashMap<String, String> generateListAttributes(Collection<Attribute> attributeList){
 		
@@ -68,7 +78,7 @@ public class AggregatorMethods {
 	    p.setProperty("java.naming.factory.host", "localhost");
 	    p.setProperty("java.naming.factory.port", "16400");
 	    javax.naming.Context jndiCtx = new InitialContext(p);
-	    Destination queue = (Queue) jndiCtx.lookup("dataQueue");
+	    Destination queue = (Queue) jndiCtx.lookup(dataQueue);
 	    ConnectionFactory cf = (ConnectionFactory) jndiCtx.lookup("cf");
 	    jndiCtx.close();
 	    Connection cnx = cf.createConnection();

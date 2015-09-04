@@ -35,7 +35,7 @@ public class MirrorTask implements Task{
 		queue = generateQueue();
 		
 		subscribeQueue();
-		GetMessage reqMess = new GetMessage(atts, strict, false, periodMs, nodeId, this.fpcId);
+		GetMessage reqMess = new GetMessage(atts, strict, false, periodMs, nodeId, queue, this.fpcId);
 		try {
 			servMsgProd.sendGetMessage(reqMess);
 		} catch (Exception e) {
@@ -57,7 +57,7 @@ public class MirrorTask implements Task{
 		queue = generateQueue();
 		
 		subscribeQueue();
-		GetMessage reqMess = new GetMessage(atts, strict, false, -1, nodeId, this.fpcId);
+		GetMessage reqMess = new GetMessage(atts, strict, false, -1, nodeId, queue, this.fpcId);
 		try {
 			servMsgProd.sendGetMessage(reqMess);
 		} catch (Exception e) {
@@ -78,7 +78,7 @@ public class MirrorTask implements Task{
 		queue = generateQueue();
 		
 		subscribeQueue();
-		GetMessage reqMess = new GetMessage(atts, strict, async, -1, nodeId, this.fpcId);
+		GetMessage reqMess = new GetMessage(atts, strict, async, -1, nodeId, queue, this.fpcId);
 		try {
 			servMsgProd.sendGetMessage(reqMess);
 		} catch (Exception e) {
