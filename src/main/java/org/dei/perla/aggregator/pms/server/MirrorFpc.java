@@ -3,13 +3,12 @@ package org.dei.perla.aggregator.pms.server;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Consumer;
 
+import org.dei.perla.core.fpc.Attribute;
 import org.dei.perla.core.fpc.Fpc;
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
-import org.dei.perla.core.sample.Attribute;
 
 public class MirrorFpc implements Fpc {
 		
@@ -53,7 +52,7 @@ public class MirrorFpc implements Fpc {
 						
 			MirrorTask mirTask = new MirrorTask(atts, handler, strict, nodeId, id);
 			
-			mirTask.start();
+			mirTask.startConsumer();
 						
 			return mirTask;
 		}
@@ -64,7 +63,7 @@ public class MirrorFpc implements Fpc {
 			
 			MirrorTask mirTask = new MirrorTask(atts, handler, strict, periodMs, nodeId, id);
 			
-			mirTask.start();
+			mirTask.startConsumer();
 			
 			return mirTask;
 		}
@@ -75,7 +74,7 @@ public class MirrorFpc implements Fpc {
 			
 			MirrorTask mirTask = new MirrorTask(atts, handler, strict, true, nodeId, id);
 			
-			mirTask.start();
+			mirTask.startConsumer();
 			
 			return mirTask;
 								
@@ -85,6 +84,6 @@ public class MirrorFpc implements Fpc {
 		@Override
 		public void stop(Consumer<Fpc> handler) {
 			// TODO Auto-generated method stub
-			
+			//creare stop message da inviare giù
 		}
 }

@@ -2,7 +2,6 @@ package org.dei.perla.aggregator.pms.node;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +39,7 @@ public class AggregatorSystem {
 	private final DeviceDescriptorParser parser;
 	private final TreeRegistry registry;
 	private final FactoryHandler fctHand = new FactoryHandler();
-	
+	private final Thread consumerThread;
 	public AggregatorSystem(List<Plugin> plugins) throws Exception{
 		 	
 		//Initialize the connection with a server and receives a node ID
@@ -49,10 +48,9 @@ public class AggregatorSystem {
 			//Lancio un consumer che attende query dal server
             aggrConsumer = new AggregatorConsumer (nodeId, registry);
             
-            new Thread(aggrConsumer).start();
+            consumerThread = new Thread(aggrConsumer);
 						
-			
-		 
+				 
 		    // Initialize default Device Descriptor packages
 	        Set<String> pkgs = new HashSet<>();
 	        pkgs.add("org.dei.perla.core.descriptor");
@@ -104,7 +102,7 @@ public class AggregatorSystem {
 	                idGenerated = true;
 	            }
 
-	            AggregatorFpc fpc = (AggregatorFpc) factory.createFpc(d, id);
+	            Fpc fpc = factory.createFpc(d, id);
 	            registry.add(fpc);
 	            
 	            //Notifica della creazione dell'Fpc al server superiore
@@ -127,6 +125,9 @@ public class AggregatorSystem {
             
 	   }
 
+	   public void start(){
+		   consumerThread.start();
+	   }
 	
 	
 	   private final class FactoryHandler implements IOHandler {

@@ -2,10 +2,12 @@ package org.dei.perla.aggregator.pms.types;
 
 import java.io.Serializable;
 import java.util.List;
-import org.dei.perla.core.sample.Attribute;
+import org.dei.perla.core.fpc.Attribute;
 
 
 public class GetMessage implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String nodeId;
 	private int fpcId;
@@ -54,4 +56,5 @@ public class GetMessage implements Serializable{
 	public String getQueue(){
 		return this.queue;
 	}
+	
 }

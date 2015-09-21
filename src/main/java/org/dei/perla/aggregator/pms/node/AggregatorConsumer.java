@@ -19,6 +19,8 @@ import javax.naming.NamingException;
 
 import org.dei.perla.aggregator.pms.types.GetMessage;
 import org.dei.perla.aggregator.pms.types.QueryMessage;
+import org.dei.perla.core.fpc.Fpc;
+import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.registry.TreeRegistry;
 
 public class AggregatorConsumer implements Runnable {
@@ -125,22 +127,21 @@ public class MsgListener implements MessageListener {
 }
 
 	public void sendToFpc(GetMessage message){
-		
 		AggregatorTaskHandler aggrTaskHandler= new AggregatorTaskHandler(message.getQueue());
+		Fpc f = registry.get(message.getFpcId());
+		Task t = null;
 		
 		if (message.isAsync()){
-			registry.get(message.getFpcId())
-			.async(message.getAttributes(),message.isStrict(), aggrTaskHandler);
-		}
-		if (message.getPeriodMs()!=-1){
-			registry.get(message.getFpcId())
-			.get(message.getAttributes(), message.isStrict(), message.getPeriodMs(), aggrTaskHandler);			
-		}
-		if (message.getPeriodMs()==-1){
-			registry.get(message.getFpcId())
-			.get(message.getAttributes(), message.isStrict(), aggrTaskHandler);
+			t = f.async(message.getAttributes(),message.isStrict(), aggrTaskHandler);
+		} else if (message.getPeriodMs()!=-1){
+			t = f.get(message.getAttributes(), message.isStrict(), message.getPeriodMs(), aggrTaskHandler);			
+		} else if (message.getPeriodMs()==-1){
+			t = f.get(message.getAttributes(), message.isStrict(), aggrTaskHandler);
 		}
 		
+		if (t != null) {
+			aggrTaskHandler.setTask(t);
+		}
 	}
 
 

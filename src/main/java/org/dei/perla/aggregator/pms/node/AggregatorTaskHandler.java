@@ -3,21 +3,25 @@ package org.dei.perla.aggregator.pms.node;
 import org.dei.perla.aggregator.pms.types.DataMessage;
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
-import org.dei.perla.core.sample.Sample;
+import org.dei.perla.core.fpc.Sample;
 
 public class AggregatorTaskHandler implements TaskHandler {
-	AggregatorMethods aggrMet;
 	
-	String queue ;
+	private AggregatorMethods aggrMet;
+	private String queue;
+	private Task task;
 	
 	public AggregatorTaskHandler(String queue){
 		this.queue=queue;
 	}
 	
+	protected void setTask(Task task) {
+		this.task = task;
+	}
+	
 	@Override
 	public void complete(Task task) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -36,7 +40,6 @@ public class AggregatorTaskHandler implements TaskHandler {
 	@Override
 	public void error(Task task, Throwable cause) {
 		// TODO Auto-generated method stub
-		
 	}
 
 }

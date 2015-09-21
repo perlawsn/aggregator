@@ -15,8 +15,7 @@ import javax.naming.InitialContext;
 
 import org.dei.perla.aggregator.pms.types.AddFpcMessage;
 import org.dei.perla.aggregator.pms.types.DataMessage;
-import org.dei.perla.core.sample.Attribute;
-import org.dei.perla.core.sample.Sample;
+import org.dei.perla.core.fpc.Attribute;
 import org.objectweb.joram.client.jms.Queue;
 
 public class AggregatorMethods {
@@ -73,7 +72,7 @@ public class AggregatorMethods {
 	}
     
     public void sendDataMessage(DataMessage message) throws Exception{
-		Properties p = new Properties();
+    	Properties p = new Properties();
 		p.setProperty("java.naming.factory.initial", "fr.dyade.aaa.jndi2.client.NamingContextFactory");
 	    p.setProperty("java.naming.factory.host", "localhost");
 	    p.setProperty("java.naming.factory.port", "16400");

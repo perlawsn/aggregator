@@ -3,18 +3,17 @@ package org.dei.perla.aggregator.pms.server;
 import java.net.ConnectException;
 import java.util.List;
 import java.util.Properties;
-import java.util.Random;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.QueueConnectionFactory;
 import javax.naming.NamingException;
 
 import org.dei.perla.aggregator.pms.types.GetMessage;
+import org.dei.perla.core.fpc.Attribute;
+import org.dei.perla.core.fpc.Sample;
+import org.dei.perla.core.fpc.SamplePipeline;
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
-import org.dei.perla.core.sample.Attribute;
-import org.dei.perla.core.sample.Sample;
-import org.dei.perla.core.sample.SamplePipeline;
 import org.objectweb.joram.client.jms.Queue;
 import org.objectweb.joram.client.jms.admin.AdminException;
 import org.objectweb.joram.client.jms.admin.AdminModule;
@@ -54,7 +53,7 @@ public class MirrorTask implements Task{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		startConsumer();
+	
 		
 	}
 	
@@ -219,7 +218,7 @@ public class MirrorTask implements Task{
 		return queue;
 	}
 
-	private void startConsumer(){
+	public void startConsumer(){
 		MirrorTaskConsumer mtc = new MirrorTaskConsumer(this);
 		new Thread(mtc).start();
 	}

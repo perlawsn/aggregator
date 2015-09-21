@@ -2,11 +2,12 @@ package org.dei.perla.aggregator.pms.types;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashMap;
 
-import org.dei.perla.core.sample.Attribute;
+import org.dei.perla.core.fpc.Attribute;
 
 public class AddFpcMessage implements Serializable{
+	
+	private static final long serialVersionUID = -5592331871913188119L;
 	
 	private String nodeId;
 	private int fpcId;
@@ -29,10 +30,5 @@ public class AddFpcMessage implements Serializable{
 	public Collection<Attribute> getAttributesMap(){
 		return attributes;
 	}
-   
-
-	
-	
-	
 
 }

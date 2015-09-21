@@ -2,7 +2,7 @@ package org.dei.perla.aggregator.pms.server;
 
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
-import org.dei.perla.core.sample.Sample;
+import org.dei.perla.core.fpc.Sample;
 
 public class MirrorTaskHandler implements TaskHandler {
 
