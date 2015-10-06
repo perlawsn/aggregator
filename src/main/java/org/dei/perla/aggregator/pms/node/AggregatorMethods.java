@@ -1,5 +1,14 @@
 package org.dei.perla.aggregator.pms.node;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
+import java.io.Serializable;
+import java.io.StreamCorruptedException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Properties;
@@ -14,6 +23,7 @@ import javax.jms.Session;
 import javax.naming.InitialContext;
 
 import org.dei.perla.aggregator.pms.types.AddFpcMessage;
+import org.dei.perla.aggregator.pms.types.CopyOfAddFpcMessage;
 import org.dei.perla.aggregator.pms.types.DataMessage;
 import org.dei.perla.core.fpc.Attribute;
 import org.objectweb.joram.client.jms.Queue;
@@ -55,12 +65,15 @@ public class AggregatorMethods {
 
     //Invio dati per la creazione di un FPC su server
     public void sendFpcMessage(AddFpcMessage fpc) throws Exception{
+    	
+    	clone(fpc);
+    	
 		Properties p = new Properties();
 		p.setProperty("java.naming.factory.initial", "fr.dyade.aaa.jndi2.client.NamingContextFactory");
 	    p.setProperty("java.naming.factory.host", "localhost");
-	    p.setProperty("java.naming.factory.port", "16400");
+	    p.setProperty("java.naming.factory.port", "16500");
 	    javax.naming.Context jndiCtx = new InitialContext(p);
-	    Destination queue = (Queue) jndiCtx.lookup("serviceQueue");
+	    Destination queue = (Queue) jndiCtx.lookup("serverqueue");
 	    ConnectionFactory cf = (ConnectionFactory) jndiCtx.lookup("cf");
 	    jndiCtx.close();
 	    Connection cnx = cf.createConnection();
@@ -75,7 +88,7 @@ public class AggregatorMethods {
     	Properties p = new Properties();
 		p.setProperty("java.naming.factory.initial", "fr.dyade.aaa.jndi2.client.NamingContextFactory");
 	    p.setProperty("java.naming.factory.host", "localhost");
-	    p.setProperty("java.naming.factory.port", "16400");
+	    p.setProperty("java.naming.factory.port", "16500");
 	    javax.naming.Context jndiCtx = new InitialContext(p);
 	    Destination queue = (Queue) jndiCtx.lookup(dataQueue);
 	    ConnectionFactory cf = (ConnectionFactory) jndiCtx.lookup("cf");
@@ -87,6 +100,29 @@ public class AggregatorMethods {
 	    producer.send(omsg);
 	    cnx.close();
 	}
+    
+    public static final Object clone(Serializable in) {
+        try {
+            ByteArrayOutputStream byteOutStream = new ByteArrayOutputStream();
+            ObjectOutputStream outStream = new ObjectOutputStream(byteOutStream);
+            outStream.writeObject(in);
+            ByteArrayInputStream byteInStream =
+                new ByteArrayInputStream(byteOutStream.toByteArray());
+            ObjectInputStream inStream = new ObjectInputStream(byteInStream);
+            return inStream.readObject();
+        } catch (OptionalDataException e) {
+         throw new RuntimeException("Optional data found. " + e.getMessage()); //$NON-NLS-1$
+        } catch (StreamCorruptedException e) {
+         throw new RuntimeException("Serialized object got corrupted. " + e.getMessage()); //$NON-NLS-1$
+        } catch (ClassNotFoundException e) {
+         throw new RuntimeException("A class could not be found during deserialization. " + e.getMessage()); //$NON-NLS-1$
+        } catch (NotSerializableException ex) {
+            ex.printStackTrace();
+         throw new IllegalArgumentException("Object is not serializable: " + ex.getMessage()); //$NON-NLS-1$
+        } catch (IOException e) {
+         throw new RuntimeException("IO operation failed during serialization. " + e.getMessage()); //$NON-NLS-1$
+        }
+    }
     
 	
 }

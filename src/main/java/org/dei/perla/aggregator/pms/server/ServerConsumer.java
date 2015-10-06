@@ -39,15 +39,14 @@ public class ServerConsumer implements Runnable {
 	public void run() {
 		System.out.println("Listens to ");
 		Properties p = new Properties();
-		p.setProperty("java.naming.factory.initial",
-				"fr.dyade.aaa.jndi2.client.NamingContextFactory");
+		p.setProperty("java.naming.factory.initial","fr.dyade.aaa.jndi2.client.NamingContextFactory");
 		p.setProperty("java.naming.factory.host", "localhost");
-		p.setProperty("java.naming.factory.port", "16400");
+		p.setProperty("java.naming.factory.port", "16500");
 
 		try {
 			ictx = new InitialContext(p);
 
-			dest = (Destination) ictx.lookup("queue");
+			dest = (Destination) ictx.lookup("serverqueue");
 			cf = (ConnectionFactory) ictx.lookup("cf");
 			ictx.close();
 		} catch (NamingException e) {
@@ -96,6 +95,9 @@ public class ServerConsumer implements Runnable {
 					if (((ObjectMessage) msg).getObject() instanceof AddFpcMessage) {
 						AddFpcMessage message = (AddFpcMessage) ((ObjectMessage) msg)
 								.getObject();
+						
+						System.out.println("Fpc received");
+						
 						// Attiva l'aggiunta dell'fpc
 
 						MirrorFpc newFpc = new MirrorFpc(message.getFpcId(),

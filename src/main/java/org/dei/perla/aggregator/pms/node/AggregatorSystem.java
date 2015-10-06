@@ -30,7 +30,7 @@ import org.dei.perla.core.registry.TreeRegistry;
 public class AggregatorSystem {
 	private static final Logger log = Logger.getLogger(PerLaSystem.class);
 	
-	private AggregatorAdmin nodeAdmin = new AggregatorAdmin();
+	private AggregatorAdmin nodeAdmin = new AggregatorAdmin(16010, "16400");
 	private AggregatorMethods nodeMethods = new AggregatorMethods();
 	private AggregatorConsumer aggrConsumer;
 	private final String nodeId;
@@ -40,7 +40,8 @@ public class AggregatorSystem {
 	private final TreeRegistry registry;
 	private final FactoryHandler fctHand = new FactoryHandler();
 	private final Thread consumerThread;
-	public AggregatorSystem(List<Plugin> plugins) throws Exception{
+	
+	public AggregatorSystem(List<Plugin> plugins) {
 		 	
 		//Initialize the connection with a server and receives a node ID
 			registry = new TreeRegistry();
@@ -127,6 +128,7 @@ public class AggregatorSystem {
 
 	   public void start(){
 		   consumerThread.start();
+		   System.out.println("Consumer started");
 	   }
 	
 	

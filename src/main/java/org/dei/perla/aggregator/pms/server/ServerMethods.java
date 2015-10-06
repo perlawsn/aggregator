@@ -1,6 +1,9 @@
 package org.dei.perla.aggregator.pms.server;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -12,10 +15,17 @@ import javax.naming.InitialContext;
 
 import org.dei.perla.aggregator.pms.types.GetMessage;
 import org.dei.perla.aggregator.pms.types.QueryMessage;
+import org.dei.perla.core.fpc.Attribute;
 import org.objectweb.joram.client.jms.Queue;
 
 
 public class ServerMethods {
+	
+	HashMap<String, String> map;
+	static final String ALPHABET = "0123456789abcdefghijklmnopqrstuvwzxy";
+    static Random rnd = new Random(System.currentTimeMillis());
+    static final int LENGHT = 4;
+    
 	
 	public void sendGetMessage(GetMessage reqMsg) throws Exception{
 		Properties p = new Properties();
@@ -38,5 +48,22 @@ public class ServerMethods {
 		
 	}
 	
+	 public HashMap<String, String> generateListAttributes(Collection<Attribute> attributeList){
+			
+			for(Attribute att:attributeList){
+				map.put(att.getId(),att.getType().getId());
+						
+			}
+			
+			return map;
+		}
+		
+	    public static String generateId() {
+	        StringBuilder sb = new StringBuilder(LENGHT);
+	        for (int i = 0; i < LENGHT; i++) {
+	            sb.append(ALPHABET.charAt(rnd.nextInt(ALPHABET.length())));
+	        }
+	        return sb.toString();
+	    }
 	
 }
