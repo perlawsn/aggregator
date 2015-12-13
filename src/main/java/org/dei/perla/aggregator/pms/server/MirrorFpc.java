@@ -22,6 +22,7 @@ public class MirrorFpc implements Fpc {
 	        this.type = type;
 	        this.atts = atts;
 	        this.nodeId = nodeId;
+	        System.out.println("Mirror created");
 	    }
 
 	    @Override

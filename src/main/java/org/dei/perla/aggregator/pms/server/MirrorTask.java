@@ -1,6 +1,7 @@
 package org.dei.perla.aggregator.pms.server;
 
 import java.net.ConnectException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
@@ -11,7 +12,7 @@ import javax.naming.NamingException;
 import org.dei.perla.aggregator.pms.types.GetMessage;
 import org.dei.perla.core.fpc.Attribute;
 import org.dei.perla.core.fpc.Sample;
-import org.dei.perla.core.fpc.SamplePipeline;
+import org.dei.perla.core.fpc.base.SamplePipeline;
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
 import org.objectweb.joram.client.jms.Queue;
@@ -22,18 +23,18 @@ import org.objectweb.joram.client.jms.tcp.TcpConnectionFactory;
 
 public class MirrorTask implements Task{
 	
-	private final List<Attribute> atts;
-	private final MirrorTaskHandler handler;
-	private final int fpcId;
-	private final String nodeId;
-	private final String queue;
+	private  List<Attribute> atts;
+	private  MirrorTaskHandler handler;
+	private  int fpcId;
+	private  String nodeId;
+	private  String queue;
 	private ServerMethods servMsgProd = new ServerMethods();
 	private boolean hasStarted = false;
     private boolean running = false;
     private SamplePipeline pipeline;
     private Properties p = new Properties();
     private javax.naming.Context jndiCtx;
-    
+    private long periodMs;
 	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, 
 			long periodMs, String nodeId, int fpcId){
 		
@@ -99,6 +100,14 @@ public class MirrorTask implements Task{
 		startConsumer();
 	}
 	
+	 public MirrorTask(int id, Collection<Attribute> attributes,
+	            long period, Collection<Integer> fpcs, Collection<Task> tasks) {
+	        this.fpcId = id;
+	        this.periodMs = period;
+	        this.atts =(List<Attribute>) attributes;
+	        
+	        
+	    }
 	
 	protected final synchronized void processSample(Object[] sample) {
 	        if (!running) {

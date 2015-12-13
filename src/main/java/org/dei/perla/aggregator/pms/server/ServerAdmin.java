@@ -58,7 +58,7 @@ public class ServerAdmin {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NamingException e){
-			continue;
+			break;
 		}
 	    
 			

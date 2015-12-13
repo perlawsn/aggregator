@@ -25,6 +25,7 @@ import org.dei.perla.core.fpc.FpcCreationException;
 import org.dei.perla.core.fpc.FpcFactory;
 import org.dei.perla.core.fpc.base.BaseFpcFactory;
 import org.dei.perla.core.message.MapperFactory;
+import org.dei.perla.core.registry.Registry;
 import org.dei.perla.core.registry.TreeRegistry;
 
 public class AggregatorSystem {
@@ -104,7 +105,7 @@ public class AggregatorSystem {
 	            }
 
 	            Fpc fpc = factory.createFpc(d, id);
-	            registry.add(fpc);
+	            //registry.add(fpc);
 	            
 	            //Notifica della creazione dell'Fpc al server superiore
 	            
@@ -155,6 +156,12 @@ public class AggregatorSystem {
 	        }
 
 	    }
+	   
+	   public Registry getRegistry(){
+		   
+		   return registry;
+		   
+	   }
 
 	}
 	

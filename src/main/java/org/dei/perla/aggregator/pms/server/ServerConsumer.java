@@ -28,11 +28,12 @@ public class ServerConsumer implements Runnable {
 	private Destination dest = null;
 	private ConnectionFactory cf = null;
 	private TreeRegistry registry;
+	private String port;
 
-	public ServerConsumer(TreeRegistry registry) {
+	public ServerConsumer(TreeRegistry registry, String port) {
 
 		this.registry = registry;
-
+		this.port=port;
 	}
 
 	@Override

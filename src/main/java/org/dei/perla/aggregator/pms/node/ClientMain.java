@@ -14,10 +14,13 @@ import org.dei.perla.core.fpc.FpcCreationException;
 import org.dei.perla.core.message.json.JsonMapperFactory;
 import org.dei.perla.core.message.urlencoded.UrlEncodedMapperFactory;
 
+
 public class ClientMain {
 
 	 private static final String descPath ="src/main/java/org/dei/perla/aggregator/pms/node/simulator.xml";
 	
+	 
+	 
 	 private static final List<Plugin> plugins;
 	    static {
 	        List<Plugin> ps = new ArrayList<>();
