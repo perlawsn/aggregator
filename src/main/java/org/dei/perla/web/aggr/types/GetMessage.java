@@ -1,4 +1,4 @@
-package org.dei.perla.aggregator.pms.types;
+package org.dei.perla.web.aggr.types;
 
 import java.io.Serializable;
 import java.util.List;

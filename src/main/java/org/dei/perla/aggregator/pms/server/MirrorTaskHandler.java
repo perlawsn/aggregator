@@ -14,7 +14,8 @@ public class MirrorTaskHandler implements TaskHandler {
 
 	@Override
 	public void data(Task task, Sample sample) {
-		// TODO Auto-generated method stub
+		System.out.println("Sono in data");
+		
 		
 	}
 

@@ -2,7 +2,11 @@ package org.dei.perla.aggregator.pms.server;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Collection;
+import java.util.List;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -17,10 +21,15 @@ import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.dei.perla.aggregator.pms.types.AddFpcMessage;
-import org.dei.perla.aggregator.pms.types.DataMessage;
+import org.dei.perla.core.fpc.Attribute;
+import org.dei.perla.core.fpc.Sample;
+import org.dei.perla.core.fpc.TaskHandler;
 import org.dei.perla.core.registry.DuplicateDeviceIDException;
 import org.dei.perla.core.registry.TreeRegistry;
+import org.dei.perla.web.aggr.types.AddFpcMessage;
+import org.dei.perla.web.aggr.types.DataMessage;
+import org.dei.perla.fpc.mysql.*;
+import org.dei.perla.fpc.mysql.MySqlWrapper.WrongCorrespondenceException;
 
 public class ServerConsumer implements Runnable {
 
@@ -29,7 +38,7 @@ public class ServerConsumer implements Runnable {
 	private ConnectionFactory cf = null;
 	private TreeRegistry registry;
 	private String port;
-
+	private MirrorTaskHandler handler=new MirrorTaskHandler();
 	public ServerConsumer(TreeRegistry registry, String port) {
 
 		this.registry = registry;
@@ -42,12 +51,12 @@ public class ServerConsumer implements Runnable {
 		Properties p = new Properties();
 		p.setProperty("java.naming.factory.initial","fr.dyade.aaa.jndi2.client.NamingContextFactory");
 		p.setProperty("java.naming.factory.host", "localhost");
-		p.setProperty("java.naming.factory.port", "16500");
+		p.setProperty("java.naming.factory.port", "16400");
 
 		try {
 			ictx = new InitialContext(p);
 
-			dest = (Destination) ictx.lookup("serverqueue");
+			dest = (Destination) ictx.lookup("queue");
 			cf = (ConnectionFactory) ictx.lookup("cf");
 			ictx.close();
 		} catch (NamingException e) {
@@ -104,19 +113,33 @@ public class ServerConsumer implements Runnable {
 						MirrorFpc newFpc = new MirrorFpc(message.getFpcId(),
 								message.getNodeId(), "mirror",
 								message.getAttributesMap());
-
-						try {
+						
+						MySqlWrapper nw= new MySqlWrapper(newFpc);
+						MirrorTaskHandler mth=new MirrorTaskHandler();
+						List<Attribute> attr =  newFpc.getAttributes();
+						nw.get(attr, mth, "prova");
+						
+						
+						
+						MirrorTask task = (MirrorTask) newFpc.get(attr, handler);
+						
+						 try {
 							registry.add(newFpc);
 						} catch (DuplicateDeviceIDException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
+						
 
 					}
 					if (((ObjectMessage) msg).getObject() instanceof DataMessage) {
 						DataMessage message = (DataMessage) ((ObjectMessage) msg)
 								.getObject();
-						// Questo if è probabilmente totalmente inutile
+						Sample sample=new Sample(message.getFields(), message.getValues());
+						
+						Map<String, String> m =convert(sample);
+						m.get("id");
+						registry.get(Integer.parseInt(m.get("id")));
 					}
 
 				} else {
@@ -124,8 +147,23 @@ public class ServerConsumer implements Runnable {
 				}
 			} catch (JMSException jE) {
 				System.err.println("Exception in listener: " + jE);
-			}
+			} catch (WrongCorrespondenceException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			} 
 		}
 	}
 
+	private Map<String, String> convert(Sample s) {
+        Map<String, String> m = new HashMap<>();
+        s.fields().forEach((a) -> {
+            String id = a.getId();
+            Object value = s.getValue(id);
+            m.put(id, value.toString());
+            
+            System.out.println ("Preso: "+id+" : " +value.toString());
+            
+        });
+        return m;
+    }
 }

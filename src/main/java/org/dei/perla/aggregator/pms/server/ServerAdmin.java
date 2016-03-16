@@ -13,14 +13,15 @@ import org.objectweb.joram.client.jms.admin.AdminModule;
 import org.objectweb.joram.client.jms.admin.User;
 import org.objectweb.joram.client.jms.tcp.TcpConnectionFactory;
 
+
 public class ServerAdmin {
 	
-    private Properties p = new Properties();
+	private Properties p = new Properties();
     private javax.naming.Context jndiCtx;
     
-	public String createNodeContext() {
+	public void createNodeContext() {
 		
-		ConnectionFactory cf = TcpConnectionFactory.create("localhost", 16020);
+		ConnectionFactory cf = TcpConnectionFactory.create("192.168.0.3", 16010);
 	    try {
 			AdminModule.connect(cf, "root", "root");
 			User.create("anonymous", "anonymous");
@@ -29,12 +30,12 @@ public class ServerAdmin {
 			e.printStackTrace();
 		}
 	    
-	    QueueConnectionFactory qcf = TcpConnectionFactory.create("localhost", 16020);
+	    QueueConnectionFactory qcf = TcpConnectionFactory.create("192.168.0.3", 16010);
 	    
 	    
 	    p.setProperty("java.naming.factory.initial", "fr.dyade.aaa.jndi2.client.NamingContextFactory");
-	    p.setProperty("java.naming.factory.host", "localhost"); //Remote host
-	    p.setProperty("java.naming.factory.port", "16500");
+	    p.setProperty("java.naming.factory.host", "192.168.0.3"); //Remote host
+	    p.setProperty("java.naming.factory.port", "16400");
 	    
 		try {
 			jndiCtx = new javax.naming.InitialContext(p);
@@ -49,10 +50,10 @@ public class ServerAdmin {
 	    
 	    Queue queue;
 		try {
-			queue = Queue.create("serverqueue");
+			queue = Queue.create("queue");
 			queue.setFreeReading();
 			queue.setFreeWriting();
-			jndiCtx.bind("serverqueue", queue);
+			jndiCtx.bind("queue", queue);
 			jndiCtx.bind("cf", cf);
 		} catch (ConnectException | AdminException e) {
 			// TODO Auto-generated catch block
@@ -74,8 +75,13 @@ public class ServerAdmin {
 	    connected = true;
 	    }
 	    
-	    return "serverqueue";    
+	   
 }
-
+	
+	public static void main(String args[]){
+		ServerAdmin servAdmin;
+		servAdmin=new ServerAdmin();
+		servAdmin.createNodeContext();
+	}
 	
 }

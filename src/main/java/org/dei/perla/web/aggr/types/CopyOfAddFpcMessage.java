@@ -1,11 +1,11 @@
-package org.dei.perla.aggregator.pms.types;
+package org.dei.perla.web.aggr.types;
 
 import java.io.Serializable;
 import java.util.Collection;
 
 import org.dei.perla.core.fpc.Attribute;
 
-public class AddFpcMessage implements Serializable{
+public class CopyOfAddFpcMessage implements Serializable{
 	
 	private static final long serialVersionUID = -5592331871913188119L;
 	
@@ -13,10 +13,10 @@ public class AddFpcMessage implements Serializable{
 	private int fpcId;
 	private Collection<Attribute> attributes;
 	
-	public AddFpcMessage(String nodeId, int fpcId, Collection<Attribute> attributes){
+	public CopyOfAddFpcMessage(String nodeId, int fpcId){
 		this.nodeId=nodeId;
 		this.fpcId = fpcId;		
-		this.attributes = attributes;
+		
 	}
 		
 	public String getNodeId() {
@@ -27,8 +27,9 @@ public class AddFpcMessage implements Serializable{
 		return fpcId;
 	}
 	
-	public Collection<Attribute> getAttributesMap(){
-		return attributes;
+	public void setAttributes(Collection<Attribute> attributes){
+		this.attributes=attributes;
+		
 	}
-
+	
 }

@@ -31,10 +31,15 @@
   
   <dependencies>
   	<dependency>
-  		<groupId>org.dei.perla</groupId>
-  		<artifactId>perla-core</artifactId>
-  		<version>1.0.0-SNAPSHOT</version>
-  	</dependency>
+    <groupId>org.dei.perla</groupId>
+    <artifactId>perla-core</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+    <groupId>org.dei.perla</groupId>
+  <artifactId>perla-mysql</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+    </dependency>
   	<dependency>
   		<groupId>org.glassfish.web</groupId>
   		<artifactId>el-impl</artifactId>

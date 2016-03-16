@@ -13,9 +13,9 @@ import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.naming.InitialContext;
 
-import org.dei.perla.aggregator.pms.types.GetMessage;
-import org.dei.perla.aggregator.pms.types.QueryMessage;
 import org.dei.perla.core.fpc.Attribute;
+import org.dei.perla.web.aggr.types.GetMessage;
+import org.dei.perla.web.aggr.types.QueryMessage;
 import org.objectweb.joram.client.jms.Queue;
 
 

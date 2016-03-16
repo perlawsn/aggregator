@@ -17,11 +17,11 @@ import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.dei.perla.aggregator.pms.types.GetMessage;
-import org.dei.perla.aggregator.pms.types.QueryMessage;
 import org.dei.perla.core.fpc.Fpc;
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.registry.TreeRegistry;
+import org.dei.perla.web.aggr.types.GetMessage;
+import org.dei.perla.web.aggr.types.QueryMessage;
 
 public class AggregatorConsumer implements Runnable {
 	

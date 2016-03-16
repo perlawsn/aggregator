@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.dei.perla.aggregator.pms.types.AddFpcMessage;
 import org.dei.perla.core.PerLaSystem;
 import org.dei.perla.core.Plugin;
 import org.dei.perla.core.channel.ChannelFactory;
@@ -27,6 +26,7 @@ import org.dei.perla.core.fpc.base.BaseFpcFactory;
 import org.dei.perla.core.message.MapperFactory;
 import org.dei.perla.core.registry.Registry;
 import org.dei.perla.core.registry.TreeRegistry;
+import org.dei.perla.web.aggr.types.AddFpcMessage;
 
 public class AggregatorSystem {
 	private static final Logger log = Logger.getLogger(PerLaSystem.class);

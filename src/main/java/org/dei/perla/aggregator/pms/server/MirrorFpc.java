@@ -1,5 +1,6 @@
 package org.dei.perla.aggregator.pms.server;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -15,18 +16,19 @@ public class MirrorFpc implements Fpc {
 		private final String nodeId;
 	  	private final int id;
 	    private final String type;
-	    private final Collection<Attribute> atts;
+	    private final List<Attribute> atts;
 	    
 	    protected MirrorFpc(int id, String nodeId, String type, Collection<Attribute> atts) {
 	        this.id = id;
 	        this.type = type;
-	        this.atts = atts;
+	        this.atts = new ArrayList<Attribute>(atts);
 	        this.nodeId = nodeId;
 	        System.out.println("Mirror created");
 	    }
 
 	    @Override
 	    public int getId() {
+	    	System.out.println(nodeId);
 	        return id;
 	    }
 
@@ -36,7 +38,7 @@ public class MirrorFpc implements Fpc {
 	    }
 
 	    @Override
-	    public Collection<Attribute> getAttributes() {
+	    public List<Attribute> getAttributes() {
 	        return atts;
 	    }
 
@@ -53,8 +55,7 @@ public class MirrorFpc implements Fpc {
 						
 			MirrorTask mirTask = new MirrorTask(atts, handler, strict, nodeId, id);
 			
-			mirTask.startConsumer();
-						
+									
 			return mirTask;
 		}
 
@@ -64,18 +65,26 @@ public class MirrorFpc implements Fpc {
 			
 			MirrorTask mirTask = new MirrorTask(atts, handler, strict, periodMs, nodeId, id);
 			
-			mirTask.startConsumer();
-			
+					
 			return mirTask;
 		}
 
+		 @Override
+		 public Task get(List<Attribute> atts, TaskHandler handler){
+			 
+			MirrorTask mirTask=new MirrorTask(atts, handler);
+			 
+			return mirTask;
+			 
+		 }
+		
 		@Override
 		public Task async(List<Attribute> atts, boolean strict,
 				TaskHandler handler) {
 			
 			MirrorTask mirTask = new MirrorTask(atts, handler, strict, true, nodeId, id);
 			
-			mirTask.startConsumer();
+			
 			
 			return mirTask;
 								

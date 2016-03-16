@@ -37,11 +37,11 @@ public class ServerMain {
 		PerLaSystem ps= new PerLaSystem(plugins);
 		Registry registry=(TreeRegistry)ps.getRegistry();
 		
-		servAdmin=new ServerAdmin();
 		
-		servConsumer=new ServerConsumer((TreeRegistry)ps.getRegistry(), "16500");
+		
+		servConsumer=new ServerConsumer((TreeRegistry)ps.getRegistry(), "16400");
 		Thread serverThread=new Thread(servConsumer);
-		servAdmin.createNodeContext();
+		
 		serverThread.start();
 		
 		

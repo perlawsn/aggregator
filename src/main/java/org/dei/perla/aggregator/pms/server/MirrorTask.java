@@ -9,10 +9,10 @@ import javax.jms.ConnectionFactory;
 import javax.jms.QueueConnectionFactory;
 import javax.naming.NamingException;
 
-import org.dei.perla.aggregator.pms.types.GetMessage;
 import org.dei.perla.core.fpc.Attribute;
 import org.dei.perla.core.fpc.Sample;
 import org.dei.perla.core.fpc.base.SamplePipeline;
+import org.dei.perla.web.aggr.types.GetMessage;
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
 import org.objectweb.joram.client.jms.Queue;
@@ -58,6 +58,11 @@ public class MirrorTask implements Task{
 		
 	}
 	
+	public MirrorTask(List <Attribute> atts, TaskHandler handler){
+		this.handler=(MirrorTaskHandler) handler;
+		this.atts=atts;
+	}
+	
 	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, 
 			String nodeId, int fpcId){
 		
@@ -76,7 +81,7 @@ public class MirrorTask implements Task{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		startConsumer();				
+					
 	}
 	
 	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, 
@@ -97,7 +102,7 @@ public class MirrorTask implements Task{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		startConsumer();
+		
 	}
 	
 	 public MirrorTask(int id, Collection<Attribute> attributes,
@@ -227,9 +232,6 @@ public class MirrorTask implements Task{
 		return queue;
 	}
 
-	public void startConsumer(){
-		MirrorTaskConsumer mtc = new MirrorTaskConsumer(this);
-		new Thread(mtc).start();
-	}
+
 }
 
