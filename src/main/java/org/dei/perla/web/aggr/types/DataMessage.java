@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.dei.perla.core.fpc.Attribute;
+import org.dei.perla.core.fpc.Sample;
 
 public class DataMessage implements Serializable{
 
@@ -16,6 +17,10 @@ public class DataMessage implements Serializable{
 		this.values=values;
 	}
 	
+	public DataMessage(Sample sample) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public List<Attribute> getFields(){
 		
 		return fields;

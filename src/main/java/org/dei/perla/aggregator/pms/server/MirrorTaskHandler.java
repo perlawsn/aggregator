@@ -2,10 +2,19 @@ package org.dei.perla.aggregator.pms.server;
 
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
+import org.dei.perla.fpc.mysql.MySqlWrapper;
 import org.dei.perla.core.fpc.Sample;
 
 public class MirrorTaskHandler implements TaskHandler {
 
+	private MySqlWrapper wrapper;
+	
+	public MirrorTaskHandler(MySqlWrapper wrapper){
+		
+		this.wrapper=wrapper;
+		
+	}
+	
 	@Override
 	public void complete(Task task) {
 		// TODO Auto-generated method stub
@@ -15,7 +24,7 @@ public class MirrorTaskHandler implements TaskHandler {
 	@Override
 	public void data(Task task, Sample sample) {
 		System.out.println("Sono in data");
-		
+		wrapper.getDbHandler().data(task, sample);
 		
 	}
 

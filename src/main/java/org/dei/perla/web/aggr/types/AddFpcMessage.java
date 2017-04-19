@@ -30,5 +30,8 @@ public class AddFpcMessage implements Serializable{
 	public Collection<Attribute> getAttributesMap(){
 		return attributes;
 	}
+	
+	
+
 
 }

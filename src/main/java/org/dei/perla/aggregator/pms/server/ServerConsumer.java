@@ -26,8 +26,7 @@ import org.dei.perla.core.fpc.Sample;
 import org.dei.perla.core.fpc.TaskHandler;
 import org.dei.perla.core.registry.DuplicateDeviceIDException;
 import org.dei.perla.core.registry.TreeRegistry;
-import org.dei.perla.web.aggr.types.AddFpcMessage;
-import org.dei.perla.web.aggr.types.DataMessage;
+import org.dei.perla.web.aggr.types.*;
 import org.dei.perla.fpc.mysql.*;
 import org.dei.perla.fpc.mysql.MySqlWrapper.WrongCorrespondenceException;
 
@@ -38,7 +37,7 @@ public class ServerConsumer implements Runnable {
 	private ConnectionFactory cf = null;
 	private TreeRegistry registry;
 	private String port;
-	private MirrorTaskHandler handler=new MirrorTaskHandler();
+	MirrorTaskHandler mth;
 	public ServerConsumer(TreeRegistry registry, String port) {
 
 		this.registry = registry;
@@ -101,7 +100,7 @@ public class ServerConsumer implements Runnable {
 				if (msg instanceof TextMessage) {
 					System.out.println(((TextMessage) msg).getText());
 				} else if (msg instanceof ObjectMessage) {
-
+					//Arriva messaggio di un nuovo FPC
 					if (((ObjectMessage) msg).getObject() instanceof AddFpcMessage) {
 						AddFpcMessage message = (AddFpcMessage) ((ObjectMessage) msg)
 								.getObject();
@@ -115,13 +114,13 @@ public class ServerConsumer implements Runnable {
 								message.getAttributesMap());
 						
 						MySqlWrapper nw= new MySqlWrapper(newFpc);
-						MirrorTaskHandler mth=new MirrorTaskHandler();
+						mth=new MirrorTaskHandler(nw);
 						List<Attribute> attr =  newFpc.getAttributes();
 						nw.get(attr, mth, "prova");
 						
 						
+						MirrorTask task = (MirrorTask) newFpc.get(attr, mth);
 						
-						MirrorTask task = (MirrorTask) newFpc.get(attr, handler);
 						
 						 try {
 							registry.add(newFpc);
@@ -132,14 +131,24 @@ public class ServerConsumer implements Runnable {
 						
 
 					}
+					//Arrivano dati dal sistema pervasivo
 					if (((ObjectMessage) msg).getObject() instanceof DataMessage) {
 						DataMessage message = (DataMessage) ((ObjectMessage) msg)
 								.getObject();
 						Sample sample=new Sample(message.getFields(), message.getValues());
-						
+						mth.data(task, sample);
 						Map<String, String> m =convert(sample);
 						m.get("id");
 						registry.get(Integer.parseInt(m.get("id")));
+					}
+					
+					if (((ObjectMessage)msg).getObject()instanceof QueryMessage){
+						
+						//si lancia il parser
+						//si controllano gli fpc coinvolti
+						//si controllano gli aggregatori coinvolti
+						
+						
 					}
 
 				} else {

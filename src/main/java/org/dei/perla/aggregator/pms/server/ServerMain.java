@@ -37,8 +37,6 @@ public class ServerMain {
 		PerLaSystem ps= new PerLaSystem(plugins);
 		Registry registry=(TreeRegistry)ps.getRegistry();
 		
-		
-		
 		servConsumer=new ServerConsumer((TreeRegistry)ps.getRegistry(), "16400");
 		Thread serverThread=new Thread(servConsumer);
 		
