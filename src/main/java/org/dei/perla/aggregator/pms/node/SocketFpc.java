@@ -1,5 +1,6 @@
 package org.dei.perla.aggregator.pms.node;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,14 @@ import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
 
 public class SocketFpc implements Fpc{
+	
+	private ArrayList<Attribute> AttributeList = new ArrayList<Attribute>();
+	
+	public SocketFpc(String XMLDescriptor){
+		
+		AttributeList = createAttributeList(XMLDescriptor);
+		
+	}
 
 	@Override
 	public int getId() {

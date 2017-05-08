@@ -12,11 +12,19 @@ import org.dei.perla.core.fpc.TaskHandler;
 
 public class RssFpc implements Fpc {
 	
-	private String rssFeed;
+	private static String rssFeedUrl;
+	private String magnitude;
+	private String latitude;
+	private String longitude;
+	private String toponym;
 	
-	public RssFpc(String rssFeed){
+	
+	
+	public RssFpc(String rssFeedUrl){
 		
-		this.rssFeed = rssFeed;
+		this.rssFeedUrl = rssFeedUrl;
+		SyndFeedInput input = new SyndFeedInput();
+		SyndFeed feed = input.build(new XmlReader(rssFeedUrl));
 		
 	}
 
