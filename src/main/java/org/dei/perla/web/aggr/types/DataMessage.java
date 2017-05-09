@@ -17,9 +17,7 @@ public class DataMessage implements Serializable{
 		this.values=values;
 	}
 	
-	public DataMessage(Sample sample) {
-		// TODO Auto-generated constructor stub
-	}
+	
 
 	public List<Attribute> getFields(){
 		

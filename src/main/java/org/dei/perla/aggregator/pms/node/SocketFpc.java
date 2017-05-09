@@ -15,9 +15,7 @@ public class SocketFpc implements Fpc{
 	
 	private ArrayList<Attribute> AttributeList = new ArrayList<Attribute>();
 	
-	public SocketFpc(String XMLDescriptor){
-		
-		AttributeList = createAttributeList(XMLDescriptor);
+	public SocketFpc(){
 		
 	}
 

@@ -38,6 +38,7 @@ public class ServerConsumer implements Runnable {
 	private TreeRegistry registry;
 	private String port;
 	MirrorTaskHandler mth;
+	MirrorTask task;
 	public ServerConsumer(TreeRegistry registry, String port) {
 
 		this.registry = registry;
@@ -99,6 +100,18 @@ public class ServerConsumer implements Runnable {
 
 				if (msg instanceof TextMessage) {
 					System.out.println(((TextMessage) msg).getText());
+					
+					if (((TextMessage) msg).getText().contains("RSS:")){
+						//creazione di un RSS feed FPC
+						
+					}
+					
+					if (((TextMessage) msg).getText().contains("SOCKET:")){
+						
+						//creazione di un Socket FPC
+						
+					}
+					
 				} else if (msg instanceof ObjectMessage) {
 					//Arriva messaggio di un nuovo FPC
 					if (((ObjectMessage) msg).getObject() instanceof AddFpcMessage) {
@@ -119,7 +132,7 @@ public class ServerConsumer implements Runnable {
 						nw.get(attr, mth, "prova");
 						
 						
-						MirrorTask task = (MirrorTask) newFpc.get(attr, mth);
+						task = (MirrorTask) newFpc.get(attr, mth);
 						
 						
 						 try {
