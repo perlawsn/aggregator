@@ -7,7 +7,10 @@ public class SerialReader {
 	
 	
 	public static void main(String args[]){
-		SerialPort serialPort = new SerialPort("COM4");
+		SerialPort serialPort = new SerialPort("/dev/ttyACM0");
+		
+		//sudo chmod 666 /dev/ttyACM0
+		
 		try {
 			serialPort.openPort();
 		} catch (SerialPortException e) {

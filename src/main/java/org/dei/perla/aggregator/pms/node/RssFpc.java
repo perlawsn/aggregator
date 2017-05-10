@@ -22,9 +22,7 @@ public class RssFpc implements Fpc {
 	
 	public RssFpc(String rssFeedUrl){
 		
-		this.rssFeedUrl = rssFeedUrl;
-		SyndFeedInput input = new SyndFeedInput();
-		SyndFeed feed = input.build(new XmlReader(rssFeedUrl));
+		
 		
 	}
 

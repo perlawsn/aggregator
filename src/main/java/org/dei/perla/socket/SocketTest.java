@@ -23,7 +23,7 @@ public class SocketTest {
                     PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                     
                     //a= [att1][att2][att3][att4]-[period]-[numerosample]
-                    
+                    System.out.println("invio comando");
                     String a="1111-9-1";
                     out.println(a);
                     
