@@ -9,12 +9,24 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
 
-public class SocketTest {
+public class SocketTest extends Thread {
 
     /**
      * Runs the server.
      */
-    public static void main(String[] args) throws IOException {
+	
+	public void run() {
+		try {
+			this.serverSocket();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+    public void serverSocket() throws IOException {
         ServerSocket listener = new ServerSocket(9090);
         try {
             while (true) {
@@ -22,17 +34,18 @@ public class SocketTest {
                 try {
                     PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                     
-                    //a= [att1][att2][att3][att4]-[period]-[numerosample]
+                    //a= [att1][att2][att3][att4][att5]-[period]-[numerosample]
                     System.out.println("invio comando");
-                    String a="1111-9-1";
+                    String a="11111-9-1";
                     out.println(a);
                     
                     int bytesRead;
-                    byte[] messageByte = new byte[100];
+                    byte[] messageByte = new byte[200];
                     InputStream clientInputStream = socket.getInputStream();
                     
                     DataInputStream in = new DataInputStream(clientInputStream);
 
+                                       
                     boolean end = false;
                    
                     String messageString="";
@@ -42,16 +55,12 @@ public class SocketTest {
                         
                         messageString = new String(messageByte, 0, bytesRead);
                         
-                        if (messageString.contains("descriptor")){
+                        if (messageString.contains("DESCRIPTOR")){
                         	
-                        	//manda un messaggio JMS a Joram con un messaggio FPC
+                        	System.out.println("ARRIVATO UN DESCRITTORE: add FPC");
+                        	System.out.println(messageString);
                         
-                        }else if(messageString.contains("data")){
-                        	
-                        	//manda un messaggio JMS data message
-                        	
-                        	//
-                        	
+                        
                         }
                       
                         

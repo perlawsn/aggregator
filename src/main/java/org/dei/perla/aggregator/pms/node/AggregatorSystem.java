@@ -105,12 +105,14 @@ public class AggregatorSystem {
 	            }
 
 	            Fpc fpc = factory.createFpc(d, id);
-	            //registry.add(fpc);
+	            System.out.println("adding FPC"+id);
+	            registry.add(fpc);
+	                       
 	            
 	            //Notifica della creazione dell'Fpc al server superiore
 	            
-	            AddFpcMessage addFpcOnServer = new AddFpcMessage(nodeId, fpc.getId(), fpc.getAttributes() );
-	            nodeMethods.sendFpcMessage(addFpcOnServer);
+	            //AddFpcMessage addFpcOnServer = new AddFpcMessage(nodeId, fpc.getId(), fpc.getAttributes() );
+	            //nodeMethods.sendFpcMessage(addFpcOnServer);
 	            	            
 	            return fpc;
 

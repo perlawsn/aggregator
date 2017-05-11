@@ -17,6 +17,11 @@ public class DataMessage implements Serializable{
 		this.values=values;
 	}
 	
+	public DataMessage(){
+		fields=null;
+		values=null;
+	}
+	
 	
 
 	public List<Attribute> getFields(){

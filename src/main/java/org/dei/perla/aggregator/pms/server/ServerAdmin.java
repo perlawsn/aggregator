@@ -21,7 +21,7 @@ public class ServerAdmin {
     
 	public void createNodeContext() {
 		
-		ConnectionFactory cf = TcpConnectionFactory.create("192.168.0.3", 16010);
+		ConnectionFactory cf = TcpConnectionFactory.create("localhost", 16010);
 	    try {
 			AdminModule.connect(cf, "root", "root");
 			User.create("anonymous", "anonymous");
@@ -30,11 +30,11 @@ public class ServerAdmin {
 			e.printStackTrace();
 		}
 	    
-	    QueueConnectionFactory qcf = TcpConnectionFactory.create("192.168.0.3", 16010);
+	    QueueConnectionFactory qcf = TcpConnectionFactory.create("localhost", 16010);
 	    
 	    
 	    p.setProperty("java.naming.factory.initial", "fr.dyade.aaa.jndi2.client.NamingContextFactory");
-	    p.setProperty("java.naming.factory.host", "192.168.0.3"); //Remote host
+	    p.setProperty("java.naming.factory.host", "localhost"); //Remote host
 	    p.setProperty("java.naming.factory.port", "16400");
 	    
 		try {

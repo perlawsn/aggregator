@@ -28,7 +28,7 @@ public class AggregatorTaskHandler implements TaskHandler {
 	public void data(Task task, Sample sample) {
 		//qui scatta l'invio
 		
-		DataMessage dataMessage = new DataMessage(sample);
+		DataMessage dataMessage = new DataMessage();
 		try {
 			aggrMet.sendDataMessage(dataMessage);
 		} catch (Exception e) {
