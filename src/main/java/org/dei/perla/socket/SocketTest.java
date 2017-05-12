@@ -95,7 +95,14 @@ public class SocketTest extends Thread {
                         String timeStamp = new SimpleDateFormat("yyyy_MM_dd-HH_mm_ss").format(new Date(System.currentTimeMillis()));
                         
                         
-                        String insertingQuery="";
+                        String insertingQuery="INSERT INTO st_el(temperature, humidity, axeX, axeY, axeZ, date) "
+                        		+ "VALUES("+temperature+","
+                        				+humidity+", "
+                        				+axe1 +", "
+                        				+axe2+ ", "
+                        				+axe3+ ", "
+                        				+timeStamp+ " "
+                        						+ ")";
                         
                         try {
     						cmd.executeUpdate(insertingQuery);
