@@ -7,6 +7,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SocketTest extends Thread {
@@ -47,8 +51,25 @@ public class SocketTest extends Thread {
 
                                        
                     boolean end = false;
-                   
+                  //Connection to database	
+        			Connection con = null;
+        			Statement cmd = null;
+        			
+        			MySqlPerLa myPerla = new MySqlPerLa();
                     String messageString="";
+                    
+                    try {
+        				con = myPerla.connect("jdbc:mysql://localhost/perla_database");
+        				cmd = con.createStatement();
+        				
+        				
+        				
+        				} catch (SQLException e) {
+        					// TODO Auto-generated catch block
+        					e.printStackTrace();
+        				}
+                    
+                    
 					while(!end)
                     {
                         bytesRead = in.read(messageByte);
@@ -65,6 +86,23 @@ public class SocketTest extends Thread {
                       
                         
                         System.out.println("MESSAGE: " + messageString);
+                        String [] sample = messageString.split("--");
+                        String temperature = sample[0];
+                        String humidity = sample[1];
+                        String axe1 = sample[2];
+                        String axe2 = sample[3];
+                        String axe3 = sample [4];
+                        String timeStamp = new SimpleDateFormat("yyyy_MM_dd-HH_mm_ss").format(new Date(System.currentTimeMillis()));
+                        
+                        
+                        String insertingQuery="";
+                        
+                        try {
+    						cmd.executeUpdate(insertingQuery);
+    					} catch (SQLException e) {
+    						// TODO Auto-generated catch block
+    						e.printStackTrace();
+    					}
                         
                     }
                     

@@ -1,0 +1,21 @@
+CREATE TABLE `ingv` (
+  `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
+  `identification` varchar(200) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `updated` varchar(200) DEFAULT NULL,
+  `latitude` varchar(200) DEFAULT NULL,
+  `longitude` varchar(200) DEFAULT NULL,
+  `summary` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3586 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `st_el` (
+  `temperature` varchar(200) DEFAULT NULL,
+  `humidity` varchar(200) DEFAULT NULL,
+  `axeX` varchar(200) DEFAULT NULL,
+  `axeY` varchar(200) DEFAULT NULL,
+  `axeZ` varchar(200) DEFAULT NULL,
+  `date` varchar(200) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
