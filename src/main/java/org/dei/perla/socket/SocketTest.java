@@ -69,7 +69,8 @@ public class SocketTest extends Thread {
         					e.printStackTrace();
         				}
                     
-                    
+                    int counter = 0;
+                    String [] last5sample = {"0", "0", "0", "0", "0"};
 					while(!end)
                     {
                         bytesRead = in.read(messageByte);
@@ -81,29 +82,42 @@ public class SocketTest extends Thread {
                         	System.out.println("ARRIVATO UN DESCRITTORE: add FPC");
                         	System.out.println(messageString);
                         
-                        
+                        	continue;
                         }
                       
                         
-                        System.out.println("MESSAGE: " + messageString);
-                        String [] sample = messageString.split("--");
+                        System.out.println("MESSAGE: " + messageString.replaceAll ("\r\n|\r|\n", " "));
+                        String [] sample = messageString.split("_");
                         String temperature = sample[0];
+                        
+                        last5sample[counter] = temperature;
+                        
                         String humidity = sample[1];
                         String axe1 = sample[2];
                         String axe2 = sample[3];
                         String axe3 = sample [4];
+                        axe3=axe3.substring(0, 6);
                         String timeStamp = new SimpleDateFormat("yyyy_MM_dd-HH_mm_ss").format(new Date(System.currentTimeMillis()));
                         
                         
                         String insertingQuery="INSERT INTO st_el(temperature, humidity, axeX, axeY, axeZ, date) "
-                        		+ "VALUES("+temperature+","
-                        				+humidity+", "
-                        				+axe1 +", "
-                        				+axe2+ ", "
-                        				+axe3+ ", "
-                        				+timeStamp+ " "
-                        						+ ")";
+                          		+ "VALUES("+"'"+temperature+"',"
+                          				+"'"+humidity+"', "
+                          				+"'"+axe1 +"', "
+                          				+"'"+axe2+ "', "
+                          				+"'"+axe3+ "', "
+                          				+"'"+timeStamp+"' "
+                          						+ ");";
+ 
+              
+                        this.getMax(last5sample);
+                        this.getAvg(last5sample);
+                        System.out.println("##################");
                         
+                        counter++;
+                        if (counter==5){
+                        	counter=0;
+                        }
                         try {
     						cmd.executeUpdate(insertingQuery);
     					} catch (SQLException e) {
@@ -122,6 +136,35 @@ public class SocketTest extends Thread {
             listener.close();
         }
     }
+    
+    
+    private float  getMax(String[] last5sample){
+    	
+    	float massimo = Float.valueOf(last5sample[0]).floatValue();
+    	for (int i=1; i<5; i++){
+    		float current=Float.valueOf(last5sample[i]).floatValue();
+    		if (current>massimo){
+    			massimo = current;
+    		}
+    	}
+    		System.out.println("Il massimo sample degli ultimi 5 minuti è "+massimo);
+    		return massimo;
+    	
+    }
+    
+    private float  getAvg(String[] last5sample){
+    	float sum=0;
+    	for (int i=0; i<5; i++){
+    		sum = sum + Float.valueOf(last5sample[i]).floatValue();
+    	}
+    	
+    	float avg=sum/5;
+    	System.out.println("Il valore medio dei sample degli ultimi 5 minuti è "+avg);
+    	return avg;
+    }
+    
+    
+    
     
     private void sendDataMessage(){
     	

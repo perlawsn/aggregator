@@ -13,7 +13,7 @@ public class MySqlPerLa {
 	
 	
 	
- Connection connect(String hostAddr2) throws SQLException {
+ public Connection connect(String hostAddr2) throws SQLException {
 		//Connection opening and declaration of the Statement
 		//If the connection is already open, it closes it and reopen with 
 		//new parameters

@@ -10,7 +10,7 @@ public class Prototype {
 		
 		
 		String query1 = "CREATE OUTPUT STREAM st_el(temperature,humidity,axeX,axeY,axeZ)"
-					 + "SAMPLING EVERY 5 MINUTES"
+					 + "SAMPLING EVERY 5 SECONDI"
 					 + "EXECUTE IF EXISTS temperature,humidity,axeX,axeY,axeZ";
 		
 		String query2 = "CREATE OUTPUT STREAM feed()"
@@ -22,9 +22,9 @@ public class Prototype {
 		System.out.println("PERIOD : "+period);
 		//minuti				
 		
-		fileReader.setPeriod(period);
+		//fileReader.setPeriod(period);
 		
-		  (new Thread(fileReader)).start();
+		 // (new Thread(fileReader)).start();
 		
 		SocketTest socket = new SocketTest();
 		 (new Thread(socket)).start();
