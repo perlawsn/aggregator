@@ -32,6 +32,13 @@ import org.dei.perla.fpc.mysql.MySqlWrapper.WrongCorrespondenceException;
 
 public class ServerConsumer implements Runnable {
 
+	/**
+	 * Questa classe rappresenta il thread che si occupera di comunicare con il server, 
+	 * tramite le code. 
+	 * 
+	 */
+	
+	
 	private javax.naming.Context ictx = null;
 	private Destination dest = null;
 	private ConnectionFactory cf = null;
@@ -101,16 +108,11 @@ public class ServerConsumer implements Runnable {
 				if (msg instanceof TextMessage) {
 					System.out.println(((TextMessage) msg).getText());
 					
-					if (((TextMessage) msg).getText().contains("RSS:")){
-						//creazione di un RSS feed FPC
-						
-					}
-					
-					if (((TextMessage) msg).getText().contains("SOCKET:")){
-						
-						//creazione di un Socket FPC
-						
-					}
+			/**
+			 * Quando arriva dall'aggregator/raspberry un messaggio di AddFpc 
+			 * viene parsato da questo metodo che poi crea un MirrorFpc
+			 * 		
+			 */
 					
 				} else if (msg instanceof ObjectMessage) {
 					//Arriva messaggio di un nuovo FPC

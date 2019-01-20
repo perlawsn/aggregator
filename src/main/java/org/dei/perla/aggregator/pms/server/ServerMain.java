@@ -17,6 +17,11 @@ import org.dei.perla.core.registry.TreeRegistry;
 
 
 public class ServerMain {
+	
+	/**
+	 * Inizializzamo il sistema.
+	 * 
+	 */
 
 	 private static final List<Plugin> plugins;
 	    static {

@@ -18,10 +18,9 @@ import java.io.InputStream;
 import java.util.*;
 
 /**
- * A simple helper class employed to automatically setup the PerLa Middleware.
- * See the perla-example and perla-web projects for examples of its use.
  *
- * @author Guido Rota 18/05/15.
+ * Questo è un PerLaSystem pulito. Il lavoro viene fatto dalle altre classi.
+ *
  */
 public final class PerLaSystem {
 

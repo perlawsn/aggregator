@@ -12,6 +12,13 @@ import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
 
 public class MirrorFpc implements Fpc {
+	
+	/**
+	 * Questa è la classe che viene inizializzata nel momento in cui un FPC viene 
+	 * creato su un aggregatore/raspberry. I dati dell'FPC vengono usati per creare questo 
+	 * "Mirror", che è legato al nodo tramite il nodeId e ha un proprio numero identificativo
+	 * progressivo.
+	 */
 		
 		private final String nodeId;
 	  	private final int id;

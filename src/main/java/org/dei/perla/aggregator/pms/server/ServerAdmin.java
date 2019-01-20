@@ -13,6 +13,14 @@ import org.objectweb.joram.client.jms.admin.AdminModule;
 import org.objectweb.joram.client.jms.admin.User;
 import org.objectweb.joram.client.jms.tcp.TcpConnectionFactory;
 
+/** @documentazione gennaio 2019
+* Per connettersi al server Joram, devono essere inizializzata una classe che
+* dica al sistema l'indirizzo di Joram. In questo caso decidiamo che il server Joram risieda
+* sul server PerLa. Sono logicamente due entità distinte, ma per comodità li teniamo su 
+* un'unica macchina. Un'applicazione professionale probabilmente vedrebbe il server Joram
+* su una macchina dedicata. 
+* In questo caso siamo nell'ambito del server PerLa, quindi l'hostname è localhost. 
+*/
 
 public class ServerAdmin {
 	

@@ -7,6 +7,9 @@ import org.dei.perla.core.fpc.Sample;
 
 public class MirrorTaskHandler implements TaskHandler {
 
+	/**
+	 * Il MirrorTaskHandler, tramite il metodo data, inserisce i dati raccolti nel database
+	 */
 	private MySqlWrapper wrapper;
 	
 	public MirrorTaskHandler(MySqlWrapper wrapper){

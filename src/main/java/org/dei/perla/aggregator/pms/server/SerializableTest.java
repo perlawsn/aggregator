@@ -10,6 +10,11 @@ import java.io.OptionalDataException;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
 
+/**
+ * 
+ * @author cesco
+ *
+ */
 
 public class SerializableTest {
     public static final Object clone(Serializable in) {

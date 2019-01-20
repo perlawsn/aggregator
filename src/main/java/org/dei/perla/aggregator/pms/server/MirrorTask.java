@@ -38,6 +38,14 @@ public class MirrorTask implements Task{
 	public MirrorTask(List <Attribute> atts, TaskHandler handler, boolean strict, 
 			long periodMs, String nodeId, int fpcId){
 		
+	/**
+	 * Questa è un po' la classe centrale del sistema.
+	 * Ad Ogni FPC è assegnata una coda. 
+	 * I metodi MirrorTask sono quelli che appunto iscrivono la coda sul Server.
+	 * CreateContext crea la connessione con il server Joram.
+	 * 	
+	 */
+		
 		
 		this.atts=atts;
 		this.handler=(MirrorTaskHandler) handler;
