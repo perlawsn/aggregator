@@ -7,6 +7,9 @@ import org.dei.perla.core.fpc.Attribute;
 
 public class AggregatorTask implements Task {
 
+	/**
+	 * in questo caso non la usiamo
+	 */
 	@Override
 	public List<Attribute> getAttributes() {
 		// TODO Auto-generated method stub

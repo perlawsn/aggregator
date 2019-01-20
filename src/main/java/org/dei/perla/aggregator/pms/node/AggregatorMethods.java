@@ -36,6 +36,10 @@ public class AggregatorMethods {
     static final int LENGHT = 4;
     private String dataQueue;
     
+    /**
+     * Il costruttore riceve come parametro la coda dedicata a questo aggregator/raspberry.
+     * @param dataQueue
+     */
     public AggregatorMethods(String dataQueue){
     	this.dataQueue=dataQueue;
     	
@@ -45,6 +49,14 @@ public class AggregatorMethods {
     	
     }
     
+    /**
+     * Viene generata la lista degli attributi dell'FPC. Il metodo riceve appunto 
+     * una lista di attributi, che sono quelli dell'FPC creato sul sistema aggregator/raspberry.
+     * Verranno quindi inviati al server in modo da poter creare un MirrorFPC corrispondente
+     * all'FPC contenuto sull'aggregator.
+     * @param attributeList
+     * @return
+     */
     public HashMap<String, String> generateListAttributes(Collection<Attribute> attributeList){
 		
 		for(Attribute att:attributeList){
@@ -63,14 +75,23 @@ public class AggregatorMethods {
         return sb.toString();
     }
 
-    //Invio dati per la creazione di un FPC su server
+    /**
+     * Questo metodo manda al server un messaggio contenente le informazioni degli FPC appena creati.
+     * NEl campo dove ho scritto ip/dns va messo l'ip del server. Ho lasciato la porta.
+     * Il parametro "serverqueue" indica il nome della coda del server. In pratica
+     * la Destination è la queue (coda) con il nome serverqueue, che viene ricercata tramite 
+     * il metodo lookup.
+     * 
+     * @param fpc
+     * @throws Exception
+     */
     public void sendFpcMessage(AddFpcMessage fpc) throws Exception{
     	
     	clone(fpc);
     	
 		Properties p = new Properties();
 		p.setProperty("java.naming.factory.initial", "fr.dyade.aaa.jndi2.client.NamingContextFactory");
-	    p.setProperty("java.naming.factory.host", "localhost");
+	    p.setProperty("java.naming.factory.host", "ip/dns");
 	    p.setProperty("java.naming.factory.port", "16500");
 	    javax.naming.Context jndiCtx = new InitialContext(p);
 	    Destination queue = (Queue) jndiCtx.lookup("serverqueue");
@@ -83,6 +104,15 @@ public class AggregatorMethods {
 	    producer.send(omsg);
 	    cnx.close();
 	}
+    
+    /**
+     * Questo metodo manda al server un messaggio contenente le informazioni dei dati raccolti.
+     * NEl campo dove ho scritto ip/dns va messo l'ip del server. Ho lasciato la porta.
+     * Il parametro "serverqueue" indica il nome della coda del server. In pratica
+     * la Destination è la queue (coda) con il nome serverqueue, che viene ricercata tramite 
+     * il metodo lookup.
+     * 
+     */
     
     public void sendDataMessage(DataMessage message) throws Exception{
     	Properties p = new Properties();

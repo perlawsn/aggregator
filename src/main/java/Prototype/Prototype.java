@@ -21,15 +21,15 @@ public class Prototype {
 		String query2 = "CREATE OUTPUT STREAM feed()"
 				+ "SAMPLING EVERY 5 MINUTES";
 		
-		//RemoteFileReader fileReader = new RemoteFileReader();
-		//ParseQuery parser = new ParseQuery();
-		//int period = Integer.parseInt(parser.parseQueryTime(query1));
-		//System.out.println("PERIOD : "+5);
-		//minuti				
+		RemoteFileReader fileReader = new RemoteFileReader();
+		ParseQuery parser = new ParseQuery();
+		int period = Integer.parseInt(parser.parseQueryTime(query1));
+		System.out.println("PERIOD : "+5);
+					
 		
-		//fileReader.setPeriod(5);
+		fileReader.setPeriod(5);
 		
-		//(new Thread(fileReader)).start();
+		(new Thread(fileReader)).start();
 		
 		SocketTest socket = new SocketTest();
 		 (new Thread(socket)).start();

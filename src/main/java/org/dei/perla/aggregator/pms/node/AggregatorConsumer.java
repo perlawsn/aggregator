@@ -102,7 +102,7 @@ public class AggregatorConsumer implements Runnable {
 
 /**
  * 
- * Questa sotto Classe rappresenta il 
+ * Questa sotto Classe rappresenta il Listener dei messaggi 
  * 
  *
  */

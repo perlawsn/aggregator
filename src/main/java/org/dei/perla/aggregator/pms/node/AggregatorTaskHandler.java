@@ -7,6 +7,11 @@ import org.dei.perla.core.fpc.Sample;
 
 public class AggregatorTaskHandler implements TaskHandler {
 	
+	/**
+	 * Classe tipica dell'FPC. Quando arriva un dato al FPC, viene richiamato il metodo data()
+	 * che in questo caso manda in DataMessage al server Perla. 
+	 */
+	
 	private AggregatorMethods aggrMet;
 	private String queue;
 	private Task task;

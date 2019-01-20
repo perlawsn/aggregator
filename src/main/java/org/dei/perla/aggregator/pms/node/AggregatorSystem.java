@@ -31,6 +31,29 @@ import org.dei.perla.web.aggr.types.AddFpcMessage;
 public class AggregatorSystem {
 	private static final Logger log = Logger.getLogger(PerLaSystem.class);
 	
+	/**
+	 * Documentazione gennaio 2019
+	 * Questa classe è l'estensione della classe tipica del System di PerLa, 
+	 * adattatata alla situazione di un aggregator che si connette al server centrale.
+	 * VIene quindi inizializzato l'aggregator Admin e viene inizializzata la classe AggregatorMethods.
+	 * I metodi da notare sono:
+	 * 
+	 * injectDescriptor:
+	 * questo metodo, ricevuto un descrittore, crea un fpc
+	 * 
+	 * registry.add(fpc):
+	 * questo metodo può essere usato in due modi. Il primo tramite il richiamo da injectDescriptor,
+	 * il secondo invece tramite il richiamo diretto, dopo aver creato "a mano" una classe FPC completa.
+	 * Inject descriptor infatti non fa altro che ricevere un descrittore e trasformarlo 
+	 * in una classe FPC.
+	 * 
+	 * AddFpcMessage addFpcOnServer = new AddFpcMessage(nodeId, fpc.getId(), fpc.getAttributes() ):
+	 * Il FPC appena creato viene mandato al server centrale. Viene creata una classe AddFpcMessage
+	 * contenente Id e Attributi, che viene poi inviata tramite il metodo:
+	 * 
+	 * nodeMethods.sendFpcMessage(addFpcOnServer);
+	 */
+	
 	private AggregatorAdmin nodeAdmin = new AggregatorAdmin(16010, "16400");
 	private AggregatorMethods nodeMethods = new AggregatorMethods();
 	private AggregatorConsumer aggrConsumer;
@@ -115,8 +138,8 @@ public class AggregatorSystem {
 	            
 	            //Notifica della creazione dell'Fpc al server superiore
 	            
-	            //AddFpcMessage addFpcOnServer = new AddFpcMessage(nodeId, fpc.getId(), fpc.getAttributes() );
-	            //nodeMethods.sendFpcMessage(addFpcOnServer);
+	            AddFpcMessage addFpcOnServer = new AddFpcMessage(nodeId, fpc.getId(), fpc.getAttributes() );
+	            nodeMethods.sendFpcMessage(addFpcOnServer);
 	            	            
 	            return fpc;
 

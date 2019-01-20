@@ -19,7 +19,9 @@ public class ClientMain {
 
 	 private static final String descPath ="src/main/java/org/dei/perla/aggregator/pms/node/simulator.xml";
 	
-	 
+	 /**
+	  * Classe main che inizializza il sistema. 
+	  */
 	 
 	 private static final List<Plugin> plugins;
 	    static {
