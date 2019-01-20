@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.dei.perla.aggregator.pms.node.RssTaskHandler;
 import org.xml.sax.SAXException;
 
 
@@ -27,20 +28,24 @@ public class RemoteFileReader extends Thread{
 	//http://cnt.rm.ingv.it/feed/atom/all_week
 	
 	private int per;
-	
+	RssTaskHandler handler;
 	
 	public RemoteFileReader(String rssFeedUrl, Integer period){
 		
 	}
+    public RemoteFileReader(RssTaskHandler handler){
+		this.handler=handler;
+	}
+    public RemoteFileReader(){
+		
+	}
+	
 	
 	public void setPeriod(int per){
 		this.per=per;
 	}
 	
-public RemoteFileReader(){
-		
-	}
-	
+
 	public void remoteReader() {
 	
 		while(true){
@@ -64,7 +69,7 @@ public RemoteFileReader(){
 			while ( ( line = buf.readLine() ) != null ) {
 
 				b.write(line+"\n");
-
+				//handler.data(task, sample);
 			}
 			
 			b.flush();

@@ -13,11 +13,23 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.dei.perla.aggregator.pms.node.SocketTaskHandler;
+
 public class SocketTest extends Thread {
 
     /**
-     * Runs the server.
+     * Lancia il Socket.
      */
+	
+	SocketTaskHandler handler;
+	
+	public SocketTest(){
+		
+	}
+	
+	public SocketTest(SocketTaskHandler handler){
+	this.handler=handler;	
+	}
 	
 	public void run() {
 		try {
@@ -59,7 +71,16 @@ public class SocketTest extends Thread {
                     String messageString="";
                     
                     try {
-        				con = myPerla.connect("jdbc:mysql://localhost/perla_database");
+                    	/**
+                    	 * Piccola nota: qui ho fatto una piccola deroga al modello di base
+                    	 * Al posto di mandare il messaggio al server tramite JMS, il quale 
+                    	 * server poi inserisce i dati nel database, ho pensato di mandare
+                    	 * direttamente i dati al database.
+                    	 * Se non piace, si può modificare il metodo data() di SocketTaskHandler
+                    	 * e richiamarlo. Indico successivamente dove andrebbe fatto.
+                    	 */
+                    	
+        				con = myPerla.connect("jdbc:mysql://<server>/perla_database");
         				cmd = con.createStatement();
         				
         				
@@ -99,7 +120,12 @@ public class SocketTest extends Thread {
                         axe3=axe3.substring(0, 6);
                         String timeStamp = new SimpleDateFormat("yyyy_MM_dd-HH_mm_ss").format(new Date(System.currentTimeMillis()));
                         
-                        
+                        /**
+                         * handler.data() 
+                         * per rispettare il modello perla andrebbe richiamato qui il metodo 
+                         * data, per inviare al server un messaggio JMS 
+                         * 
+                         */
                         String insertingQuery="INSERT INTO st_el(temperature, humidity, axeX, axeY, axeZ, date) "
                           		+ "VALUES("+"'"+temperature+"',"
                           				+"'"+humidity+"', "

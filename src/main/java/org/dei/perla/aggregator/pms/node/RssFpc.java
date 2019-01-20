@@ -17,18 +17,21 @@ public class RssFpc implements Fpc {
 	private static String rssFeedUrl;
 	private static Integer period;	
 	private static RemoteFileReader reader;
-	
+	RssTaskHandler handler;
 	/**
-	 * Questa è la classe feed
+	 * Questa è la classe deputata a ricevere i feed RSS. Viene inizializzato anche l'Handler, 
+	 * che viene poi passato a Remote File Reader, che contiene i metodi per la connessione
+	 * al Feed.
+	 * Per inizializzare questo tipo di FPC non passiamo dalla factory.
 	 * @param rssFeedUrl
 	 * @param period
 	 */
 	
 	public RssFpc(String rssFeedUrl, Integer period){
-		
+		handler=new RssTaskHandler();
 		this.rssFeedUrl = rssFeedUrl;
 		this.period = period;
-		reader= new RemoteFileReader(rssFeedUrl, period);
+		reader= new RemoteFileReader(handler);
 		reader.start();
 	}
 

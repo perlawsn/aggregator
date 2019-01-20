@@ -6,9 +6,15 @@ import org.dei.perla.core.fpc.TaskHandler;
 import org.dei.perla.web.aggr.types.DataMessage;
 
 public class RssTaskHandler implements TaskHandler{
-	private AggregatorMethods aggrMet;
-	private String queue;
-	private Task task;
+	private AggregatorMethods aggrMet = new AggregatorMethods();
+
+	/**
+	 * Il metodo data lancia il metodo per inviare i dati al server. 
+	 * In questo caso abbiamo previsto solo la possibilità che venga 
+	 * utilizzato a bordo di un aggregatore/raspberry. 
+	 * Volendo si può anche inserire direttamente l'opzione (il codice va scritto ma
+	 * è abbastanza semplice) per inserire i dati direttamente nel database).
+	 */
 	@Override
 	public void complete(Task task) {
 		// TODO Auto-generated method stub
