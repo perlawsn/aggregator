@@ -19,13 +19,13 @@ public class MySqlPerLa {
 		//new parameters
 		if (con!=null){
 		con.close();
-		this.con = DriverManager.getConnection(hostAddr2, "root", "francesco89");
+		this.con = DriverManager.getConnection(hostAddr2, "root", "pass");
 		this.cmd=con.createStatement();
 		System.out.println(con.toString());
 		return con;
 		}
 		else{
-			this.con = DriverManager.getConnection(hostAddr2, "root", "francesco89");
+			this.con = DriverManager.getConnection(hostAddr2, "root", "pass");
 			this.cmd=con.createStatement();
 			
 			System.out.println(con.toString());

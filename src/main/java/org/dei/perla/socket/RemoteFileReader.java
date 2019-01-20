@@ -27,8 +27,18 @@ public class RemoteFileReader extends Thread{
 	//http://cnt.rm.ingv.it/feed/atom/all_week
 	
 	private int per;
+	
+	
+	public RemoteFileReader(String rssFeedUrl, Integer period){
+		
+	}
+	
 	public void setPeriod(int per){
 		this.per=per;
+	}
+	
+public RemoteFileReader(){
+		
 	}
 	
 	public void remoteReader() {

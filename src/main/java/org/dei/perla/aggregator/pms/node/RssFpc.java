@@ -9,21 +9,27 @@ import org.dei.perla.core.fpc.Attribute;
 import org.dei.perla.core.fpc.Fpc;
 import org.dei.perla.core.fpc.Task;
 import org.dei.perla.core.fpc.TaskHandler;
+import org.dei.perla.socket.RemoteFileReader;
+import org.dei.perla.socket.RssReader;
 
 public class RssFpc implements Fpc {
 	
 	private static String rssFeedUrl;
-	private String magnitude;
-	private String latitude;
-	private String longitude;
-	private String toponym;
+	private static Integer period;	
+	private static RemoteFileReader reader;
 	
+	/**
+	 * Questa è la classe feed
+	 * @param rssFeedUrl
+	 * @param period
+	 */
 	
-	
-	public RssFpc(String rssFeedUrl){
+	public RssFpc(String rssFeedUrl, Integer period){
 		
 		this.rssFeedUrl = rssFeedUrl;
-		
+		this.period = period;
+		reader= new RemoteFileReader(rssFeedUrl, period);
+		reader.start();
 	}
 
 	
