@@ -25,12 +25,24 @@ import org.dei.perla.web.aggr.types.QueryMessage;
 
 public class AggregatorConsumer implements Runnable {
 	
+	/**
+	 * Questa classe rappresenta il thread che si occupera di comunicare con il server, 
+	 * tramite le code. 
+	 * 
+	 */
+	
+	
 	private TreeRegistry registry;
 	private String nodeId;
 	private  javax.naming.Context ictx = null;
 	private Destination dest = null;
 	private ConnectionFactory cf = null;
 	
+	/**
+	 * Il costruttore riceve l'id del nodo e il registro locale degli FPC
+	 * @param nodeId
+	 * @param registry
+	 */
 	public AggregatorConsumer (String nodeId, TreeRegistry registry) {
 		
 		this.nodeId=nodeId;
@@ -38,6 +50,9 @@ public class AggregatorConsumer implements Runnable {
 		
 	}
 	
+	/**
+	 * Poiché è un thread, c'è il metodo run()
+	 */
 	@Override
 	public void run() {
 		System.out.println("Listens to " );
@@ -48,7 +63,9 @@ public class AggregatorConsumer implements Runnable {
 	    
 		try {
 			ictx = new InitialContext(p);
-			
+			/**
+			 * 
+			 */
 			dest = (Destination) ictx.lookup("queue"+nodeId);
 			cf = (ConnectionFactory) ictx.lookup("cf");
 			    ictx.close();
@@ -83,7 +100,12 @@ public class AggregatorConsumer implements Runnable {
 		
 	}
 
-
+/**
+ * 
+ * Questa sotto Classe rappresenta il 
+ * 
+ *
+ */
 public class MsgListener implements MessageListener {
 	
 	  public void onMessage(Message msg) {
