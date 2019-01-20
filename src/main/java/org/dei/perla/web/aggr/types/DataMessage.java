@@ -8,7 +8,12 @@ import org.dei.perla.core.fpc.Sample;
 
 public class DataMessage implements Serializable{
 
-		
+	/**
+	 * Questa classe viene riempita con l'elenco degli attributi e con i valori raccolti.
+	 * Non ho usato una mappa, quindi sembra che attributi e valori siano slegati, ma 
+	 * se tutto viene lanciato correttamente, il problema non si pone perché
+	 * basta usare un indice comune.	
+	 */
 	private final List<Attribute> fields;
     private final Object[] values;
 

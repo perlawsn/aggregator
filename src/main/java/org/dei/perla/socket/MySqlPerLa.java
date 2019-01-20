@@ -11,7 +11,12 @@ public class MySqlPerLa {
 	private  Connection con;
 	private Statement cmd;
 	
-	
+	/**
+	 * Classe per la connessione al database MySql.
+	 * @param hostAddr2
+	 * @return
+	 * @throws SQLException
+	 */
 	
  public Connection connect(String hostAddr2) throws SQLException {
 		//Connection opening and declaration of the Statement

@@ -7,7 +7,10 @@ import org.dei.perla.core.fpc.Attribute;
 
 public class AddFpcMessage implements Serializable{
 	
-	
+	/**
+	 * Questa classe viene usata per comunicare le informazioni di un FPC al server, 
+	 * in modo che venga creato un MirrorFpc
+	 */
 	
 	private String nodeId;
 	private int fpcId;

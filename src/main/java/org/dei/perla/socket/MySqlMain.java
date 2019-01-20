@@ -7,6 +7,9 @@ import java.sql.Statement;
 public class MySqlMain {
 	
 	
+	/**
+	 * Classe di prova per testare le connessioni al database
+	 */
 	
 	public static void main(String args[]){
 		Connection con = null;

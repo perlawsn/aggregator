@@ -5,6 +5,12 @@ import jssc.SerialPortException;
 
 public class SerialWriter {
 	
+	/**
+	 * Classe per la comunicazione seriale con i sensori
+	 * @param args
+	 */
+	
+	
 	public static void main(String args[]){
 		
 		SerialPort serialPort = new SerialPort("COM4");

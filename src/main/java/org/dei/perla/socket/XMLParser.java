@@ -17,6 +17,13 @@ public class XMLParser {
 
   //public static void main(String argv[]) {
 
+	/**
+	 * Questa classe parsa il file XML scaricato dal feed RSS e inserisce i dati nel Database
+	 * @param fileName
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
    
 	public static void xmlParser(String fileName) throws ParserConfigurationException, SAXException, IOException{
 	

@@ -11,6 +11,11 @@ import jssc.SerialPortException;
 
 public class InsertionDatabase {
 	
+	/**
+	 * Classe per il collegamento seriale, qualora non ci fosse il WIFI 
+	 * 
+	 */
+	
 	
 	public static void main(String args[]){
 		SerialPort serialPort = new SerialPort("/dev/ttyACM0");

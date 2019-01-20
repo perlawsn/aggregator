@@ -5,6 +5,10 @@ import jssc.SerialPortException;
 
 public class SerialReader {
 	
+	/**
+	 * Classe per la comunicazione seriale con i sensori
+	 * @param args
+	 */
 	
 	public static void main(String args[]){
 		SerialPort serialPort = new SerialPort("/dev/ttyACM0");

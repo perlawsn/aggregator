@@ -21,6 +21,11 @@ import org.objectweb.joram.client.jms.Queue;
 
 public class ServerMethods {
 	
+	/**
+	 * Metodi di appoggio per il Server, utili per la comunicazione con Joram
+	 * 
+	 */
+	
 	HashMap<String, String> map;
 	static final String ALPHABET = "0123456789abcdefghijklmnopqrstuvwzxy";
     static Random rnd = new Random(System.currentTimeMillis());

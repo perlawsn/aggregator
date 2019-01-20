@@ -24,7 +24,6 @@ import javax.naming.InitialContext;
 
 import org.dei.perla.core.fpc.Attribute;
 import org.dei.perla.web.aggr.types.AddFpcMessage;
-import org.dei.perla.web.aggr.types.CopyOfAddFpcMessage;
 import org.dei.perla.web.aggr.types.DataMessage;
 import org.objectweb.joram.client.jms.Queue;
 

@@ -19,7 +19,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.dei.perla.aggregator.pms.node.RssTaskHandler;
 import org.xml.sax.SAXException;
 
-
+/**
+ * Classe per la lettura del feed RSS
+ * @author cesco
+ *
+ */
 
 public class RemoteFileReader extends Thread{
 

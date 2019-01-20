@@ -18,7 +18,7 @@ import org.dei.perla.aggregator.pms.node.SocketTaskHandler;
 public class SocketTest extends Thread {
 
     /**
-     * Lancia il Socket.
+     * Lancia il Socket. Il Thread rimane in ascolto. 
      */
 	
 	SocketTaskHandler handler;

@@ -2,6 +2,12 @@ package org.dei.perla.socket;
 
 import jssc.SerialPortList;
 
+/**
+ * Classe che stampa le porte seriali libere
+ * @author cesco
+ *
+ */
+
 public class SerialList {
 
 	
