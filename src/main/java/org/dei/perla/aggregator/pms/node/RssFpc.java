@@ -22,7 +22,7 @@ public class RssFpc implements Fpc {
 	
 	public RssFpc(String rssFeedUrl){
 		
-		
+		this.rssFeedUrl = rssFeedUrl;
 		
 	}
 

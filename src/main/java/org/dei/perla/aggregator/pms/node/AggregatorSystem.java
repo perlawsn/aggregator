@@ -87,7 +87,11 @@ public class AggregatorSystem {
 
 	}
 	
-	
+
+	   public void start(){
+		   consumerThread.start();
+		   System.out.println("Consumer started");
+	   }
 	 
 	   public Fpc injectDescriptor(InputStream is) throws FpcCreationException {
 	        int id = -1;
@@ -129,11 +133,7 @@ public class AggregatorSystem {
             
 	   }
 
-	   public void start(){
-		   consumerThread.start();
-		   System.out.println("Consumer started");
-	   }
-	
+	 
 	
 	   private final class FactoryHandler implements IOHandler {
 
